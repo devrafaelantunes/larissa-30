@@ -159,6 +159,8 @@
       max-width: 540px;
       margin: 0 auto;
       padding: 0 32px;
+      position: relative;
+      z-index: 2;
     }
 
     .sec-label {
@@ -396,7 +398,7 @@
       position: fixed;
       inset: 0;
       pointer-events: none;
-      z-index: 0;
+      z-index: 1;
     }
 
     /* touch sparkle */
@@ -642,30 +644,30 @@ function Dot() {
   this.reset = function() {
     this.x = Math.random() * W;
     this.y = Math.random() * H;
-    this.r = Math.random() * 1.5 + 0.4;
-    this.vx = (Math.random() - 0.5) * 0.22;
-    this.vy = (Math.random() - 0.5) * 0.22;
-    this.op = Math.random() * 0.12 + 0.03;
-    this.life = Math.random() * 300 + 150;
+    this.r = Math.random() * 2 + 0.8;
+    this.vx = (Math.random() - 0.5) * 0.3;
+    this.vy = -(Math.random() * 0.4 + 0.1); // drift upward slowly
+    this.op = Math.random() * 0.22 + 0.08;
+    this.life = Math.random() * 260 + 140;
     this.age  = 0;
   };
   this.reset();
   this.age = Math.floor(Math.random() * this.life);
 }
 const dots = [];
-for (let i = 0; i < 55; i++) dots.push(new Dot());
+for (let i = 0; i < 70; i++) dots.push(new Dot());
 
 function drawCanvas() {
   ctx.clearRect(0, 0, W, H);
   dots.forEach(d => {
-    const fade = Math.sin((d.age / d.life) * Math.PI); // fade in/out over lifetime
+    const fade = Math.sin((d.age / d.life) * Math.PI);
     ctx.globalAlpha = d.op * fade;
     ctx.fillStyle = '#0a0a0a';
     ctx.beginPath();
     ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
     ctx.fill();
     d.x += d.vx; d.y += d.vy; d.age++;
-    if (d.age >= d.life) d.reset();
+    if (d.age >= d.life || d.y < -10) d.reset();
   });
   ctx.globalAlpha = 1;
   requestAnimationFrame(drawCanvas);
