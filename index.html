@@ -14,8 +14,8 @@
     :root {
       --black: #0a0a0a;
       --white: #fafafa;
-      --gray:  #b0b0b0;
-      --line:  #e0e0e0;
+      --mid:   #555;
+      --line:  #d8d8d8;
     }
 
     html { scroll-behavior: smooth; }
@@ -28,417 +28,415 @@
       overflow-x: hidden;
     }
 
-    /* ── HERO ── */
+    /* ────────────── HERO ────────────── */
     .hero {
-      position: relative;
       min-height: 100svh;
       display: flex;
       flex-direction: column;
-      align-items: flex-start;
-      justify-content: flex-end;
-      padding: 0 0 52px;
-      border-bottom: 1px solid var(--line);
-      overflow: hidden;
-    }
-
-    /* the giant 30 fills the background */
-    .hero-bg-30 {
-      position: absolute;
-      top: 50%;
-      left: 50%;
-      transform: translate(-50%, -52%);
-      font-family: 'Bebas Neue', cursive;
-      font-size: clamp(54vw, 54vw, 54vw);
-      line-height: 1;
-      color: transparent;
-      -webkit-text-stroke: 1px rgba(0,0,0,0.07);
-      pointer-events: none;
-      user-select: none;
-      white-space: nowrap;
-      letter-spacing: -0.02em;
-    }
-
-    /* floating balloons — top corners only, small */
-    .bln {
-      position: absolute;
-      pointer-events: none;
-      font-size: var(--s, 1.6rem);
-      opacity: 0.3;
-      animation: blnF var(--d,8s) ease-in-out infinite var(--dl,0s);
-    }
-    @keyframes blnF {
-      0%,100% { transform: translateY(0) rotate(var(--r,-4deg)); }
-      50%      { transform: translateY(-14px) rotate(var(--r2,4deg)); }
-    }
-
-    .hero-inner {
-      position: relative;
-      z-index: 2;
-      width: 100%;
-      padding: 0 32px;
-    }
-
-    .hero-tag {
-      display: flex;
       align-items: center;
-      gap: 10px;
-      margin-bottom: 20px;
+      justify-content: center;
+      text-align: center;
+      padding: 64px 32px 72px;
+      border-bottom: 1px solid var(--line);
+      position: relative;
     }
-    .hero-tag .t-line { width: 28px; height: 1px; background: var(--black); opacity: 0.25; }
-    .hero-tag span {
+
+    .hero-eyebrow {
       font-size: 0.5rem;
       letter-spacing: 0.55em;
       text-transform: uppercase;
       font-weight: 300;
-      color: var(--gray);
+      color: var(--mid);
+      margin-bottom: 16px;
+      animation: fadeUp .8s ease .2s both;
     }
 
     .hero-name {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2.8rem, 14vw, 5.5rem);
-      font-weight: 300;
       font-style: italic;
+      font-weight: 300;
+      font-size: clamp(3rem, 14vw, 5.5rem);
       color: var(--black);
       line-height: 1;
-      letter-spacing: -0.01em;
-      animation: fadeUp .9s ease .3s both;
+      letter-spacing: 0.01em;
+      animation: fadeUp .8s ease .4s both;
     }
 
     .hero-number {
       font-family: 'Bebas Neue', cursive;
-      font-size: clamp(7rem, 36vw, 15rem);
-      line-height: 0.9;
+      font-size: clamp(12rem, 58vw, 26rem);
+      line-height: 0.82;
       color: var(--black);
-      letter-spacing: -0.03em;
-      animation: fadeUp .9s ease .5s both;
+      letter-spacing: -0.02em;
+      animation: fadeUp .8s ease .55s both;
       display: block;
     }
 
-    .hero-meta-row {
+    .hero-divider {
+      width: 40px;
+      height: 1px;
+      background: var(--black);
+      margin: 20px auto;
+      opacity: 0.25;
+      animation: fadeUp .8s ease .7s both;
+    }
+
+    .hero-meta {
       display: flex;
       align-items: center;
+      justify-content: center;
       gap: 0;
-      margin-top: 28px;
-      animation: fadeUp .9s ease .7s both;
+      animation: fadeUp .8s ease .85s both;
     }
-    .hero-meta-row .m-item {
-      padding-right: 20px;
-      margin-right: 20px;
-      border-right: 1px solid var(--line);
+    .hero-meta .m-item {
+      padding: 0 20px;
+      text-align: center;
     }
-    .hero-meta-row .m-item:last-child { border-right: none; padding-right: 0; margin-right: 0; }
-    .hero-meta-row .m-val {
+    .hero-meta .m-item + .m-item {
+      border-left: 1px solid var(--line);
+    }
+    .hero-meta .m-val {
       display: block;
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(0.88rem, 3.2vw, 1rem);
+      font-size: clamp(.9rem, 3.5vw, 1.05rem);
       font-weight: 400;
       color: var(--black);
     }
-    .hero-meta-row .m-lbl {
+    .hero-meta .m-lbl {
       display: block;
-      font-size: 0.42rem;
-      letter-spacing: 0.26em;
+      font-size: 0.4rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
       font-weight: 300;
-      color: var(--gray);
-      margin-top: 2px;
+      color: var(--mid);
+      margin-top: 3px;
     }
 
-    /* balloons positions */
-    .bln-tl { top: 6%; left: 5%; --s:1.4rem; --d:7s; --dl:0s; --r:-6deg; --r2:4deg; }
-    .bln-tr { top: 8%; right: 5%; --s:1.1rem; --d:9s; --dl:1.4s; --r:5deg; --r2:-4deg; }
-    .bln-ml { top: 40%; left: 3%; --s:1.7rem; --d:8s; --dl:2.8s; --r:-4deg; --r2:7deg; }
-    .bln-mr { top: 38%; right: 3%; --s:1.3rem; --d:10s; --dl:.8s; --r:8deg; --r2:-5deg; }
-
-    /* scroll cue */
+    /* scroll indicator */
     .scroll-cue {
       position: absolute;
-      bottom: 20px;
-      right: 32px;
+      bottom: 22px;
+      left: 50%;
+      transform: translateX(-50%);
       display: flex;
       flex-direction: column;
       align-items: center;
       gap: 8px;
-      animation: fadeUp .9s ease 1.2s both;
+      opacity: 0;
+      animation: fadeIn 1s ease 1.4s both;
     }
-    .scroll-cue span { font-size: 0.38rem; letter-spacing: 0.5em; text-transform: uppercase; color: var(--gray); writing-mode: vertical-rl; }
-    .scroll-cue-line { width: 1px; height: 40px; background: linear-gradient(to bottom, var(--black), transparent); opacity: 0.25; }
+    .scroll-cue span {
+      font-size: 0.38rem;
+      letter-spacing: 0.5em;
+      text-transform: uppercase;
+      color: var(--mid);
+    }
+    .scroll-line {
+      width: 1px;
+      height: 36px;
+      background: linear-gradient(to bottom, var(--black), transparent);
+      opacity: 0.3;
+    }
 
     @keyframes fadeUp {
-      from { opacity:0; transform:translateY(20px); }
-      to   { opacity:1; transform:translateY(0); }
+      from { opacity: 0; transform: translateY(18px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      from { opacity: 0; }
+      to   { opacity: 1; }
     }
 
-    /* ── CONTENT ── */
+    /* ────────────── SECTIONS ────────────── */
     .wrap {
-      max-width: 560px;
+      max-width: 540px;
       margin: 0 auto;
       padding: 0 32px;
     }
 
-    /* section label */
     .sec-label {
-      font-size: 0.42rem;
+      font-size: 0.4rem;
       letter-spacing: 0.55em;
       text-transform: uppercase;
       font-weight: 300;
-      color: var(--gray);
+      color: var(--mid);
       margin-bottom: 28px;
+      display: block;
     }
 
     /* ── DETAILS ── */
     .details-section {
-      padding: 60px 0 52px;
+      padding: 64px 0 56px;
       border-bottom: 1px solid var(--line);
     }
-
-    .detail-list { display: flex; flex-direction: column; gap: 0; }
 
     .d-row {
       display: flex;
       align-items: baseline;
       justify-content: space-between;
-      padding: 16px 0;
+      padding: 15px 0;
       border-bottom: 1px solid var(--line);
     }
     .d-row:last-child { border-bottom: none; }
     .d-row .d-label {
-      font-size: 0.44rem;
+      font-size: 0.42rem;
       letter-spacing: 0.34em;
       text-transform: uppercase;
       font-weight: 300;
-      color: var(--gray);
+      color: var(--mid);
       flex-shrink: 0;
-      min-width: 90px;
     }
     .d-row .d-val {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
+      font-size: 1rem;
       font-weight: 400;
       color: var(--black);
       text-align: right;
     }
     .d-row .d-val small {
       display: block;
-      font-size: 0.72rem;
-      color: var(--gray);
+      font-size: 0.68rem;
+      color: var(--mid);
       font-style: italic;
-      margin-top: 1px;
     }
 
     /* ── COUNTDOWN ── */
     .countdown-section {
-      padding: 60px 0;
+      padding: 64px 0;
       border-bottom: 1px solid var(--line);
+      text-align: center;
     }
 
-    .cd-row { display: flex; align-items: flex-start; gap: 0; }
-    .cd-block { flex: 1; text-align: center; }
+    .cd-row { display: flex; }
+    .cd-block { flex: 1; padding: 0 8px; }
     .cd-block + .cd-block { border-left: 1px solid var(--line); }
     .cd-num {
       font-family: 'Bebas Neue', cursive;
-      font-size: clamp(2.8rem, 12vw, 4rem);
+      font-size: clamp(3rem, 13vw, 4.5rem);
       color: var(--black);
       line-height: 1;
     }
-    .cd-lbl { font-size: 0.38rem; letter-spacing: 0.32em; text-transform: uppercase; font-weight: 300; color: var(--gray); margin-top: 6px; }
+    .cd-lbl {
+      font-size: 0.36rem;
+      letter-spacing: 0.34em;
+      text-transform: uppercase;
+      font-weight: 300;
+      color: var(--mid);
+      margin-top: 6px;
+      display: block;
+    }
 
     .cd-quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(.95rem, 3.5vw, 1.15rem);
+      font-size: clamp(.95rem, 3.5vw, 1.1rem);
       font-weight: 300;
-      color: var(--gray);
-      text-align: center;
+      color: var(--mid);
       margin-top: 36px;
-      line-height: 1.7;
+      line-height: 1.75;
     }
 
     /* ── MAP ── */
-    .map-section { padding: 60px 0; border-bottom: 1px solid var(--line); }
-    .map-address { margin-bottom: 16px; }
-    .map-address .addr-name { font-family:'Cormorant Garamond',serif; font-size:1.05rem; font-weight:400; color:var(--black); }
-    .map-address .addr-detail { font-size:.68rem; color:var(--gray); font-weight:300; line-height:1.5; margin-top:2px; }
-    .map-embed { width:100%; height:220px; border:1px solid var(--line); filter:grayscale(1) contrast(1.1); display:block; transition:filter .3s; }
-    .map-embed:hover { filter:grayscale(.4); }
+    .map-section { padding: 64px 0; border-bottom: 1px solid var(--line); }
+    .addr-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--black); margin-bottom: 3px; }
+    .addr-detail { font-size: .68rem; color: var(--mid); line-height: 1.5; margin-bottom: 16px; }
+    .map-embed { width: 100%; height: 220px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.1); display: block; transition: filter .3s; }
+    .map-embed:hover { filter: grayscale(.4); }
     .map-open-btn {
-      display:flex; align-items:center; justify-content:center; gap:8px;
-      margin-top:12px; width:100%; padding:13px;
-      background:transparent; border:1px solid var(--line);
-      font-family:'Inter',sans-serif; font-weight:300; font-size:.44rem;
-      letter-spacing:.4em; text-transform:uppercase; color:var(--gray);
-      text-decoration:none; transition:all .2s;
+      display: flex; align-items: center; justify-content: center; gap: 8px;
+      margin-top: 12px; width: 100%; padding: 13px;
+      background: transparent; border: 1px solid var(--line);
+      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .42rem;
+      letter-spacing: .42em; text-transform: uppercase; color: var(--mid);
+      text-decoration: none; transition: all .2s;
     }
-    .map-open-btn:hover { border-color:var(--black); color:var(--black); }
+    .map-open-btn:hover { border-color: var(--black); color: var(--black); }
 
     /* ── RSVP ── */
-    .rsvp-section { padding: 60px 0 80px; }
+    .rsvp-section { padding: 64px 0 80px; }
 
     .rsvp-heading {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(2rem,8vw,2.8rem);
+      font-size: clamp(2.2rem, 9vw, 3rem);
       font-weight: 300;
       color: var(--black);
-      margin-bottom: 4px;
       line-height: 1;
+      margin-bottom: 4px;
     }
-    .rsvp-sub { font-size:.72rem; color:var(--gray); font-weight:300; margin-bottom:38px; line-height:1.6; }
-    .rsvp-sub strong { color:var(--black); font-weight:400; }
+    .rsvp-sub {
+      font-size: .72rem;
+      color: var(--mid);
+      font-weight: 300;
+      margin-bottom: 40px;
+      line-height: 1.6;
+    }
+    .rsvp-sub strong { color: var(--black); font-weight: 400; }
 
-    .field { margin-bottom: 28px; }
+    .field { margin-bottom: 26px; }
     .field > label {
-      display:block; font-size:.4rem; letter-spacing:.46em; text-transform:uppercase;
-      font-weight:300; color:var(--gray); margin-bottom:10px;
+      display: block;
+      font-size: .4rem;
+      letter-spacing: .44em;
+      text-transform: uppercase;
+      font-weight: 300;
+      color: var(--mid);
+      margin-bottom: 10px;
     }
     .field input, .field textarea {
-      width:100%; background:transparent; border:none;
-      border-bottom:1px solid var(--line); padding:10px 0;
-      font-family:'Cormorant Garamond',serif; font-size:1rem; font-weight:400;
-      color:var(--black); outline:none; border-radius:0; -webkit-appearance:none;
-      transition:border-color .2s;
+      width: 100%; background: transparent; border: none;
+      border-bottom: 1px solid var(--line); padding: 10px 0;
+      font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400;
+      color: var(--black); outline: none; border-radius: 0; -webkit-appearance: none;
+      transition: border-color .2s;
     }
-    .field input:focus, .field textarea:focus { border-color:var(--black); }
-    .field textarea { resize:none; height:50px; line-height:1.5; }
-    ::placeholder { color:var(--gray); font-style:italic; }
+    .field input:focus, .field textarea:focus { border-color: var(--black); }
+    .field textarea { resize: none; height: 50px; line-height: 1.5; }
+    ::placeholder { color: #bbb; font-style: italic; }
 
-    .choices { display:flex; gap:8px; }
-    .choice { flex:1; }
-    .choice input[type="radio"] { position:absolute; opacity:0; width:0; height:0; }
+    .choices { display: flex; gap: 8px; }
+    .choice { flex: 1; }
+    .choice input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
     .choice label {
-      display:flex; align-items:center; justify-content:center; gap:5px;
-      padding:12px 8px; border:1px solid var(--line);
-      font-size:.44rem; letter-spacing:.2em; text-transform:uppercase;
-      cursor:pointer; transition:all .2s;
-      font-family:'Inter',sans-serif; font-weight:300; color:var(--gray);
+      display: flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 12px 8px; border: 1px solid var(--line);
+      font-size: .42rem; letter-spacing: .2em; text-transform: uppercase;
+      cursor: pointer; transition: all .2s;
+      font-family: 'Inter', sans-serif; font-weight: 300; color: var(--mid);
     }
     .choice input[type="radio"]:checked + label {
-      background:var(--black); border-color:var(--black); color:var(--white);
+      background: var(--black); border-color: var(--black); color: var(--white);
     }
 
-    .collapsible { max-height:0; overflow:hidden; opacity:0; transition:max-height .4s ease,opacity .3s ease; }
-    .collapsible.open { max-height:120px; opacity:1; }
+    .collapsible { max-height: 0; overflow: hidden; opacity: 0; transition: max-height .4s ease, opacity .3s ease; }
+    .collapsible.open { max-height: 120px; opacity: 1; }
 
     .btn-submit {
-      width:100%; padding:17px;
-      background:var(--black); color:var(--white);
-      border:none;
-      font-family:'Inter',sans-serif; font-weight:300; font-size:.46rem;
-      letter-spacing:.52em; text-transform:uppercase;
-      cursor:pointer; margin-top:32px;
-      transition:opacity .2s;
+      width: 100%; padding: 17px;
+      background: var(--black); color: var(--white);
+      border: none;
+      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .44rem;
+      letter-spacing: .55em; text-transform: uppercase;
+      cursor: pointer; margin-top: 32px;
+      transition: opacity .2s;
     }
-    .btn-submit:hover { opacity:.78; }
-    .btn-submit:disabled { opacity:.3; cursor:not-allowed; }
+    .btn-submit:hover { opacity: .78; }
+    .btn-submit:disabled { opacity: .3; cursor: not-allowed; }
 
     /* success */
-    .success-state { display:none; text-align:center; padding:52px 0; animation:fadeUp .5s ease both; }
-    .success-state .si { font-size:2.8rem; margin-bottom:18px; }
-    .success-state h3 { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:2.4rem; font-weight:300; margin-bottom:8px; }
-    .success-state p { font-size:.78rem; color:var(--gray); font-weight:300; line-height:1.7; }
+    .success-state { display: none; text-align: center; padding: 52px 0; animation: fadeUp .5s ease both; }
+    .success-state .si { font-size: 2.5rem; margin-bottom: 16px; }
+    .success-state h3 {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 2.4rem;
+      font-weight: 300;
+      color: var(--black);
+      margin-bottom: 8px;
+    }
+    .success-state p { font-size: .75rem; color: var(--mid); font-weight: 300; line-height: 1.7; }
 
     /* ── FOOTER ── */
     footer {
-      border-top:1px solid var(--line);
-      display:flex; align-items:center; justify-content:space-between;
-      padding: 24px 32px 40px;
+      border-top: 1px solid var(--line);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 24px 32px 44px;
     }
-    footer .ft-name { font-family:'Cormorant Garamond',serif; font-style:italic; font-size:1.1rem; font-weight:300; color:var(--black); }
-    footer p { font-size:.4rem; letter-spacing:.3em; text-transform:uppercase; color:var(--gray); font-weight:200; }
+    footer .ft-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1.05rem;
+      font-weight: 300;
+      color: var(--black);
+    }
+    footer .ft-date {
+      font-size: .4rem;
+      letter-spacing: .32em;
+      text-transform: uppercase;
+      color: var(--mid);
+      font-weight: 200;
+    }
 
     /* ── REVEAL ── */
-    .reveal { opacity:0; transform:translateY(20px); transition:opacity .65s ease,transform .65s ease; }
-    .reveal.on { opacity:1; transform:translateY(0); }
-    .d1{transition-delay:.06s;}.d2{transition-delay:.14s;}.d3{transition-delay:.22s;}
+    .reveal { opacity: 0; transform: translateY(18px); transition: opacity .65s ease, transform .65s ease; }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: .06s; }
+    .d2 { transition-delay: .14s; }
   </style>
 </head>
 <body>
 
-<!-- ═══ HERO ═══ -->
+<!-- ══ HERO ══ -->
 <section class="hero">
-  <div class="hero-bg-30">30</div>
-
-  <div class="bln bln-tl">🎈</div>
-  <div class="bln bln-tr">🎈</div>
-  <div class="bln bln-ml">🎈</div>
-  <div class="bln bln-mr">🎈</div>
-
-  <div class="hero-inner">
-    <div class="hero-tag">
-      <div class="t-line"></div>
-      <span id="hero-eyebrow">você está convidado para</span>
+  <p class="hero-eyebrow" id="hero-eyebrow">você está convidado para</p>
+  <h1 class="hero-name">Larissa</h1>
+  <span class="hero-number">30</span>
+  <div class="hero-divider"></div>
+  <div class="hero-meta">
+    <div class="m-item">
+      <span class="m-val">25 de Abril</span>
+      <span class="m-lbl">Data</span>
     </div>
-    <div class="hero-name">Larissa</div>
-    <span class="hero-number">30</span>
-    <div class="hero-meta-row">
-      <div class="m-item">
-        <span class="m-val">25 de Abril</span>
-        <span class="m-lbl">Data</span>
-      </div>
-      <div class="m-item">
-        <span class="m-val">Sábado · 20h</span>
-        <span class="m-lbl">Horário</span>
-      </div>
-      <div class="m-item">
-        <span class="m-val">Ribeirão Preto</span>
-        <span class="m-lbl">Local</span>
-      </div>
+    <div class="m-item">
+      <span class="m-val">Sábado · 20h</span>
+      <span class="m-lbl">Horário</span>
+    </div>
+    <div class="m-item">
+      <span class="m-val">Ribeirão Preto</span>
+      <span class="m-lbl">Local</span>
     </div>
   </div>
-
   <div class="scroll-cue">
-    <div class="scroll-cue-line"></div>
+    <div class="scroll-line"></div>
     <span>Deslize</span>
   </div>
 </section>
 
-<!-- ═══ DETAILS ═══ -->
+<!-- ══ DETAILS ══ -->
 <div class="wrap">
   <div class="details-section reveal">
-    <p class="sec-label">Detalhes do evento</p>
-    <div class="detail-list">
-      <div class="d-row">
-        <span class="d-label">Data</span>
-        <span class="d-val">25 de Abril de 2026<small>Sábado</small></span>
-      </div>
-      <div class="d-row">
-        <span class="d-label">Horário</span>
-        <span class="d-val">20h00<small>até a madrugada</small></span>
-      </div>
-      <div class="d-row">
-        <span class="d-label">Local</span>
-        <span class="d-val">Al. Sen. Carlos Geireasat, 60<small>Ribeirão Preto · SP</small></span>
-      </div>
-      <div class="d-row">
-        <span class="d-label">Dress code</span>
-        <span class="d-val">Preto &amp; Branco<small>obrigatório</small></span>
-      </div>
+    <span class="sec-label">Detalhes do evento</span>
+    <div class="d-row">
+      <span class="d-label">Data</span>
+      <span class="d-val">25 de Abril de 2026 <small>Sábado</small></span>
+    </div>
+    <div class="d-row">
+      <span class="d-label">Horário</span>
+      <span class="d-val">20h00 <small>até a madrugada</small></span>
+    </div>
+    <div class="d-row">
+      <span class="d-label">Local</span>
+      <span class="d-val">Al. Sen. Carlos Geireasat, 60 <small>Ribeirão Preto · SP</small></span>
+    </div>
+    <div class="d-row">
+      <span class="d-label">Dress code</span>
+      <span class="d-val">Preto &amp; Branco <small>obrigatório</small></span>
     </div>
   </div>
 </div>
 
-<!-- ═══ COUNTDOWN ═══ -->
+<!-- ══ COUNTDOWN ══ -->
 <div class="wrap">
   <div class="countdown-section reveal">
-    <p class="sec-label">Contagem regressiva</p>
+    <span class="sec-label">Contagem regressiva</span>
     <div class="cd-row">
-      <div class="cd-block"><div class="cd-num" id="cd-d">--</div><div class="cd-lbl">Dias</div></div>
-      <div class="cd-block"><div class="cd-num" id="cd-h">--</div><div class="cd-lbl">Horas</div></div>
-      <div class="cd-block"><div class="cd-num" id="cd-m">--</div><div class="cd-lbl">Min</div></div>
-      <div class="cd-block"><div class="cd-num" id="cd-s">--</div><div class="cd-lbl">Seg</div></div>
+      <div class="cd-block"><div class="cd-num" id="cd-d">--</div><span class="cd-lbl">Dias</span></div>
+      <div class="cd-block"><div class="cd-num" id="cd-h">--</div><span class="cd-lbl">Horas</span></div>
+      <div class="cd-block"><div class="cd-num" id="cd-m">--</div><span class="cd-lbl">Min</span></div>
+      <div class="cd-block"><div class="cd-num" id="cd-s">--</div><span class="cd-lbl">Seg</span></div>
     </div>
     <p class="cd-quote">cada momento que passa<br/>é um dia a menos para celebrar</p>
   </div>
 </div>
 
-<!-- ═══ MAP ═══ -->
+<!-- ══ MAP ══ -->
 <div class="wrap">
   <div class="map-section reveal">
-    <p class="sec-label">Localização</p>
-    <div class="map-address">
-      <p class="addr-name">Alameda Senador Carlos Geireasat, 60</p>
-      <p class="addr-detail">Ribeirão Preto · SP · CEP 14027-508</p>
-    </div>
+    <span class="sec-label">Localização</span>
+    <p class="addr-name">Alameda Senador Carlos Geireasat, 60</p>
+    <p class="addr-detail">Ribeirão Preto · SP · CEP 14027-508</p>
     <iframe class="map-embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
       src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3ao4&q=Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP"></iframe>
     <a class="map-open-btn" href="https://www.google.com/maps/search/Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP" target="_blank">
@@ -447,10 +445,10 @@
   </div>
 </div>
 
-<!-- ═══ RSVP ═══ -->
+<!-- ══ RSVP ══ -->
 <div class="wrap">
   <div class="rsvp-section reveal">
-    <p class="sec-label">Confirmar presença</p>
+    <span class="sec-label">Confirmar presença</span>
     <h2 class="rsvp-heading" id="rsvp-title">Você vai?</h2>
     <p class="rsvp-sub">Confirme até <strong>15 de abril</strong> para garantir seu lugar.</p>
 
@@ -490,7 +488,7 @@
         </div>
       </div>
       <div class="field">
-        <label>Mensagem para a Larissa <span style="opacity:.4;font-size:.85em;">(opcional)</span></label>
+        <label>Mensagem para a Larissa <span style="opacity:.45;font-size:.85em;">(opcional)</span></label>
         <textarea name="mensagem" id="f-msg" placeholder="Escreva algo carinhoso..."></textarea>
       </div>
       <button type="submit" class="btn-submit" id="btn-sub">Confirmar presença</button>
@@ -504,14 +502,13 @@
   </div>
 </div>
 
-<!-- ═══ FOOTER ═══ -->
+<!-- ══ FOOTER ══ -->
 <footer>
   <span class="ft-name">Larissa, 30 anos</span>
-  <p>25 · 04 · 2026</p>
+  <span class="ft-date">25 · 04 · 2026</span>
 </footer>
 
 <script>
-// Personalization
 const params=new URLSearchParams(window.location.search);
 const guest=params.get('convidado')||params.get('nome')||params.get('guest')||'';
 const firstName=guest?guest.trim().split(' ')[0]:'';
@@ -522,7 +519,6 @@ if(firstName){
   document.title=firstName+' · Larissa 30';
 }
 
-// Countdown
 function tick(){
   const diff=new Date('2026-04-25T20:00:00-03:00')-new Date();
   if(diff<=0) return;
@@ -534,14 +530,12 @@ function tick(){
 }
 tick(); setInterval(tick,1000);
 
-// Companion
 document.querySelectorAll('input[name="presenca"]').forEach(r=>{
   r.addEventListener('change',()=>{
     document.getElementById('acomp-field').classList.toggle('open',r.value==='Sim');
   });
 });
 
-// Submit
 function doSubmit(e){
   e.preventDefault();
   const btn=document.getElementById('btn-sub');
@@ -557,7 +551,6 @@ function doSubmit(e){
   });
 }
 
-// Scroll reveal
 const ro=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); ro.unobserve(e.target); } });
 },{threshold:0.08});
