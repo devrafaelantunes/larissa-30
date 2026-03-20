@@ -3,582 +3,946 @@
 <head>
   <meta charset="UTF-8"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-  <title>Larissa faz 30 🎈</title>
+  <meta name="apple-mobile-web-app-capable" content="yes"/>
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
+  <title>Larissa faz 30 ✦</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
-  <link rel="preconnect" href="href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Dancing+Script:wght@500&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@500;600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
     :root {
-      --black: #0e0e0e;
-      --white: #f9f7f5;
-      --gray: #d4d0cb;
+      --black: #0d0d0d;
+      --off-white: #f8f6f2;
+      --warm-gray: #c8c4bc;
       --mid: #8a8680;
+      --light: #e8e5e0;
     }
 
     html { scroll-behavior: smooth; }
 
     body {
-      background: var(--white);
+      background: var(--off-white);
       color: var(--black);
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
-      min-height: 100vh;
       overflow-x: hidden;
     }
 
-    /* ── HERO ── */
+    /* ────── PARTICLES ────── */
+    #particles {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+      overflow: hidden;
+    }
+
+    .particle {
+      position: absolute;
+      border-radius: 50%;
+      animation: drift linear infinite;
+      opacity: 0;
+    }
+
+    @keyframes drift {
+      0%   { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
+      10%  { opacity: 1; }
+      90%  { opacity: 0.6; }
+      100% { transform: translateY(-10vh) translateX(var(--dx)) rotate(360deg); opacity: 0; }
+    }
+
+    /* ────── HERO ────── */
     .hero {
+      position: relative;
       min-height: 100svh;
       display: flex;
       flex-direction: column;
       align-items: center;
       justify-content: flex-end;
-      padding: 0 24px 48px;
-      position: relative;
+      padding-bottom: 52px;
       overflow: hidden;
-      background: var(--white);
+      z-index: 1;
     }
 
-    .balloons-wrap {
+    /* Grain texture */
+    .hero::before {
+      content: '';
       position: absolute;
-      top: 0; left: 0; right: 0; bottom: 0;
+      inset: 0;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+      opacity: 0.4;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* Radial glow */
+    .hero::after {
+      content: '';
+      position: absolute;
+      top: 30%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 80vw;
+      height: 80vw;
+      max-width: 500px;
+      max-height: 500px;
+      background: radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%);
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* ── Balloons ── */
+    .balloons-container {
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 72%;
       display: flex;
       align-items: flex-start;
       justify-content: center;
-      padding-top: 40px;
-      pointer-events: none;
+      padding-top: 5svh;
+      z-index: 1;
     }
 
     .balloons-svg {
-      width: 85%;
-      max-width: 360px;
+      width: min(82vw, 340px);
       height: auto;
+      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
+      animation: floatBalloons 6s ease-in-out infinite;
     }
 
-    .hero-text {
+    @keyframes floatBalloons {
+      0%,100% { transform: translateY(0px) rotate(-0.5deg); }
+      50%      { transform: translateY(-12px) rotate(0.5deg); }
+    }
+
+    /* ── Hero Text ── */
+    .hero-content {
       position: relative;
       z-index: 2;
       text-align: center;
       width: 100%;
+      padding: 0 28px;
     }
 
     .hero-eyebrow {
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 200;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
+      font-size: clamp(0.55rem, 2.2vw, 0.65rem);
+      letter-spacing: 0.4em;
       text-transform: uppercase;
+      font-weight: 200;
       color: var(--mid);
       margin-bottom: 10px;
+      animation: fadeUp 1s ease 0.3s both;
     }
 
     .hero-name {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(2.8rem, 11vw, 4.2rem);
-      font-weight: 500;
+      font-size: clamp(3rem, 13vw, 4.5rem);
+      font-weight: 600;
       color: var(--black);
       line-height: 1;
-      margin-bottom: 6px;
+      margin-bottom: 4px;
+      animation: fadeUp 1s ease 0.5s both;
     }
 
-    .hero-subtitle {
+    .hero-age {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
+      font-size: clamp(1rem, 4.5vw, 1.3rem);
       font-weight: 300;
-      font-size: clamp(1rem, 4vw, 1.25rem);
       color: var(--mid);
-      margin-bottom: 28px;
+      margin-bottom: 24px;
+      animation: fadeUp 1s ease 0.7s both;
     }
 
-    .hero-divider {
-      width: 1px;
-      height: 32px;
+    .hero-line {
+      width: 40px;
+      height: 1px;
       background: var(--black);
-      margin: 0 auto 28px;
+      margin: 0 auto 24px;
       opacity: 0.3;
+      animation: expandLine 1s ease 0.9s both;
     }
 
-    .hero-details {
+    @keyframes expandLine {
+      from { width: 0; opacity: 0; }
+      to   { width: 40px; opacity: 0.3; }
+    }
+
+    .hero-pills {
       display: flex;
       align-items: center;
       justify-content: center;
       gap: 0;
-      font-family: 'Cormorant Garamond', serif;
-      font-weight: 300;
-      font-size: clamp(0.78rem, 3.2vw, 0.9rem);
-      letter-spacing: 0.08em;
-      color: var(--black);
+      animation: fadeUp 1s ease 1.1s both;
     }
 
-    .hero-details span {
-      padding: 0 14px;
+    .hero-pill {
       text-align: center;
-      line-height: 1.4;
+      padding: 0 16px;
     }
 
-    .hero-details .sep {
-      color: var(--gray);
-      padding: 0;
-      font-size: 1rem;
+    .hero-pill .pill-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.85rem, 3.5vw, 1rem);
+      font-weight: 400;
+      color: var(--black);
+      display: block;
     }
 
-    .scroll-cue {
-      position: absolute;
-      bottom: 16px;
-      left: 50%;
-      transform: translateX(-50%);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 4px;
-      opacity: 0.35;
-      animation: float 2s ease-in-out infinite;
-    }
-
-    .scroll-cue span {
-      font-size: 0.55rem;
+    .hero-pill .pill-label {
+      font-size: clamp(0.5rem, 2vw, 0.58rem);
       letter-spacing: 0.2em;
       text-transform: uppercase;
-      font-family: 'Montserrat', sans-serif;
-      font-weight: 300;
-    }
-
-    .scroll-cue svg { width: 14px; }
-
-    @keyframes float {
-      0%,100% { transform: translateX(-50%) translateY(0); }
-      50% { transform: translateX(-50%) translateY(6px); }
-    }
-
-    /* ── SECTIONS ── */
-    section {
-      padding: 64px 24px;
-      max-width: 480px;
-      margin: 0 auto;
-    }
-
-    .section-label {
-      font-family: 'Montserrat', sans-serif;
       font-weight: 200;
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
-      text-transform: uppercase;
       color: var(--mid);
-      margin-bottom: 20px;
-    }
-
-    /* ── INFO ── */
-    .info-section { border-top: 1px solid var(--gray); }
-
-    .info-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 32px 20px;
-    }
-
-    .info-item {}
-    .info-item .label {
-      font-size: 0.6rem;
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      color: var(--mid);
-      margin-bottom: 6px;
-      font-weight: 300;
-    }
-
-    .info-item .value {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 1.1rem;
-      font-weight: 400;
-      line-height: 1.35;
-      color: var(--black);
-    }
-
-    .info-item .value small {
       display: block;
-      font-size: 0.85rem;
-      color: var(--mid);
-      font-style: italic;
       margin-top: 2px;
     }
 
-    .map-btn {
-      display: inline-flex;
+    .hero-sep {
+      width: 1px;
+      height: 28px;
+      background: var(--warm-gray);
+    }
+
+    /* Scroll indicator */
+    .scroll-hint {
+      position: absolute;
+      bottom: 18px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 2;
+      display: flex;
+      flex-direction: column;
       align-items: center;
       gap: 6px;
-      margin-top: 8px;
-      font-size: 0.62rem;
-      letter-spacing: 0.25em;
+      animation: fadeUp 1s ease 1.4s both, pulse 2s ease 2.4s infinite;
+    }
+
+    .scroll-hint span {
+      font-size: 0.5rem;
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      font-family: 'Montserrat', sans-serif;
+      color: var(--mid);
+      font-weight: 200;
+    }
+
+    .scroll-hint .arrow {
+      width: 1px;
+      height: 28px;
+      background: linear-gradient(to bottom, var(--mid), transparent);
+    }
+
+    @keyframes pulse {
+      0%,100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
+      50%      { opacity: 1; transform: translateX(-50%) translateY(5px); }
+    }
+
+    @keyframes fadeUp {
+      from { opacity: 0; transform: translateY(24px); }
+      to   { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ────── SECTIONS ────── */
+    .section-wrap {
+      position: relative;
+      z-index: 1;
+      max-width: 520px;
+      margin: 0 auto;
+      padding: 0 28px;
+    }
+
+    /* ────── DETAILS ────── */
+    .details-section {
+      padding: 56px 0;
+      border-top: 1px solid var(--light);
+    }
+
+    .sec-eyebrow {
+      font-size: 0.55rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      font-weight: 200;
+      color: var(--mid);
+      margin-bottom: 28px;
+    }
+
+    .detail-cards {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 20px;
+    }
+
+    .detail-card {
+      background: #fff;
+      border: 1px solid var(--light);
+      padding: 20px 18px;
+      position: relative;
+      overflow: hidden;
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+    }
+
+    .detail-card:active { transform: scale(0.98); }
+
+    .detail-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0;
+      width: 2px;
+      height: 0;
+      background: var(--black);
+      transition: height 0.4s ease;
+    }
+
+    .detail-card:hover::before { height: 100%; }
+
+    .detail-card .dc-icon {
+      font-size: 1.2rem;
+      margin-bottom: 10px;
+      display: block;
+    }
+
+    .detail-card .dc-label {
+      font-size: 0.52rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 300;
+      color: var(--mid);
+      margin-bottom: 6px;
+    }
+
+    .detail-card .dc-val {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.05rem;
+      font-weight: 400;
+      line-height: 1.3;
+      color: var(--black);
+    }
+
+    .detail-card .dc-sub {
+      font-size: 0.72rem;
+      color: var(--mid);
+      font-style: italic;
+      margin-top: 2px;
+      display: block;
+    }
+
+    .detail-card.full-width {
+      grid-column: 1 / -1;
+    }
+
+    .map-link {
+      display: inline-flex;
+      align-items: center;
+      gap: 5px;
+      margin-top: 6px;
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
       font-weight: 300;
       color: var(--black);
       text-decoration: none;
       border-bottom: 1px solid var(--black);
-      padding-bottom: 2px;
-      transition: opacity .2s;
+      padding-bottom: 1px;
     }
-    .map-btn:hover { opacity: 0.5; }
 
-    /* ── RSVP ── */
-    .rsvp-section { border-top: 1px solid var(--gray); }
+    /* ────── COUNTDOWN ────── */
+    .countdown-section {
+      padding: 48px 0;
+      border-top: 1px solid var(--light);
+      text-align: center;
+    }
 
-    .rsvp-intro {
+    .countdown-intro {
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(1.2rem, 5vw, 1.5rem);
-      font-weight: 300;
-      line-height: 1.5;
-      color: var(--black);
-      margin-bottom: 32px;
-    }
-
-    .rsvp-intro em {
       font-style: italic;
+      font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+      font-weight: 300;
       color: var(--mid);
+      margin-bottom: 28px;
+      line-height: 1.5;
     }
 
-    .form-group { margin-bottom: 20px; }
+    .countdown-grid {
+      display: flex;
+      justify-content: center;
+      gap: 4px;
+    }
 
-    .form-group label {
-      display: block;
-      font-size: 0.58rem;
+    .cd-unit {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-width: 60px;
+    }
+
+    .cd-num {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(2rem, 10vw, 3rem);
+      font-weight: 300;
+      line-height: 1;
+      color: var(--black);
+      width: 60px;
+      text-align: center;
+      transition: transform 0.3s ease;
+    }
+
+    .cd-label {
+      font-size: 0.5rem;
       letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 200;
+      color: var(--mid);
+      margin-top: 4px;
+    }
+
+    .cd-sep {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 2.5rem;
+      font-weight: 300;
+      color: var(--warm-gray);
+      padding-top: 2px;
+      align-self: flex-start;
+    }
+
+    /* ────── RSVP ────── */
+    .rsvp-section {
+      padding: 56px 0 72px;
+      border-top: 1px solid var(--light);
+    }
+
+    .rsvp-heading {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2rem, 8vw, 2.8rem);
+      font-weight: 500;
+      color: var(--black);
+      margin-bottom: 8px;
+      line-height: 1.1;
+    }
+
+    .rsvp-sub {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--mid);
+      margin-bottom: 36px;
+      line-height: 1.5;
+    }
+
+    .rsvp-sub em { font-style: normal; color: var(--black); font-weight: 400; }
+
+    /* Form */
+    .field { margin-bottom: 24px; }
+
+    .field label {
+      display: block;
+      font-size: 0.52rem;
+      letter-spacing: 0.35em;
       text-transform: uppercase;
       font-weight: 300;
       color: var(--mid);
-      margin-bottom: 8px;
+      margin-bottom: 10px;
     }
 
-    .form-group input,
-    .form-group select,
-    .form-group textarea {
+    .field input,
+    .field textarea {
       width: 100%;
       background: transparent;
       border: none;
-      border-bottom: 1px solid var(--gray);
+      border-bottom: 1px solid var(--light);
       padding: 10px 0;
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 400;
       color: var(--black);
       outline: none;
       border-radius: 0;
-      transition: border-color .2s;
+      transition: border-color 0.25s;
       -webkit-appearance: none;
     }
 
-    .form-group select {
-      cursor: pointer;
-    }
-
-    .form-group input:focus,
-    .form-group select:focus,
-    .form-group textarea:focus {
+    .field input:focus,
+    .field textarea:focus {
       border-color: var(--black);
     }
 
-    .form-group textarea {
-      resize: none;
-      height: 60px;
-      line-height: 1.5;
-    }
+    .field textarea { resize: none; height: 56px; line-height: 1.5; }
 
-    ::placeholder { color: var(--gray); font-style: italic; }
+    ::placeholder { color: var(--warm-gray); font-style: italic; }
 
-    .radio-group {
+    /* Buttons choice */
+    .choice-group {
       display: flex;
-      gap: 12px;
+      gap: 10px;
     }
 
-    .radio-opt {
-      flex: 1;
-      position: relative;
-    }
+    .choice-opt { flex: 1; }
 
-    .radio-opt input[type="radio"] {
+    .choice-opt input[type="radio"] {
       position: absolute;
       opacity: 0;
-      width: 0;
+      width: 0; height: 0;
     }
 
-    .radio-opt label {
+    .choice-opt label {
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 12px 8px;
-      border: 1px solid var(--gray);
-      font-size: 0.65rem;
+      gap: 6px;
+      padding: 13px 8px;
+      border: 1px solid var(--light);
+      font-size: 0.6rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
-      transition: all .2s;
+      transition: all 0.2s ease;
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
       color: var(--mid);
+      text-align: center;
     }
 
-    .radio-opt input[type="radio"]:checked + label {
+    .choice-opt input[type="radio"]:checked + label {
       background: var(--black);
       border-color: var(--black);
-      color: var(--white);
+      color: var(--off-white);
     }
 
+    .sub-field {
+      overflow: hidden;
+      max-height: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
+      opacity: 0;
+    }
+
+    .sub-field.visible {
+      max-height: 120px;
+      opacity: 1;
+    }
+
+    /* Submit */
     .btn-submit {
       width: 100%;
-      padding: 16px;
+      padding: 18px;
       background: var(--black);
-      color: var(--white);
+      color: var(--off-white);
       border: none;
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
-      font-size: 0.65rem;
-      letter-spacing: 0.35em;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
       text-transform: uppercase;
       cursor: pointer;
-      margin-top: 28px;
-      transition: opacity .2s;
+      margin-top: 32px;
+      transition: all 0.3s ease;
+      position: relative;
+      overflow: hidden;
     }
-    .btn-submit:hover { opacity: 0.75; }
-    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
 
-    /* ── SUCCESS ── */
-    .success-msg {
+    .btn-submit::before {
+      content: '';
+      position: absolute;
+      top: 0; left: -100%;
+      width: 100%; height: 100%;
+      background: rgba(255,255,255,0.1);
+      transition: left 0.4s ease;
+    }
+
+    .btn-submit:hover::before { left: 100%; }
+    .btn-submit:hover { opacity: 0.85; }
+    .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+
+    /* Success */
+    .success-state {
       display: none;
       text-align: center;
-      padding: 40px 0;
+      padding: 48px 0;
+      animation: fadeUp 0.6s ease both;
     }
 
-    .success-msg .check {
-      font-size: 2rem;
-      margin-bottom: 16px;
+    .success-state .s-icon {
+      font-size: 2.5rem;
+      margin-bottom: 20px;
+      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
     }
 
-    .success-msg h3 {
+    @keyframes popIn {
+      from { transform: scale(0) rotate(-10deg); opacity: 0; }
+      to   { transform: scale(1) rotate(0deg); opacity: 1; }
+    }
+
+    .success-state h3 {
       font-family: 'Dancing Script', cursive;
-      font-size: 2rem;
-      font-weight: 500;
-      margin-bottom: 8px;
+      font-size: 2.5rem;
+      font-weight: 600;
+      margin-bottom: 10px;
     }
 
-    .success-msg p {
+    .success-state p {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
-      color: var(--mid);
       font-style: italic;
+      font-size: 1.05rem;
+      color: var(--mid);
+      line-height: 1.6;
     }
 
-    /* ── FOOTER ── */
+    /* ────── FOOTER ────── */
     footer {
-      border-top: 1px solid var(--gray);
+      border-top: 1px solid var(--light);
       text-align: center;
-      padding: 32px 24px 48px;
-      font-size: 0.58rem;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      color: var(--gray);
-      font-weight: 300;
+      padding: 28px 24px 48px;
+      position: relative;
+      z-index: 1;
     }
 
-    /* ── ANIMATIONS ── */
-    .fade-in {
-      opacity: 0;
-      transform: translateY(20px);
-      transition: opacity 0.6s ease, transform 0.6s ease;
+    footer p {
+      font-size: 0.55rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--warm-gray);
+      font-weight: 200;
     }
-    .fade-in.visible {
+
+    /* ────── SCROLL REVEAL ────── */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: opacity 0.7s ease, transform 0.7s ease;
+    }
+
+    .reveal.shown {
       opacity: 1;
       transform: translateY(0);
+    }
+
+    .reveal-delay-1 { transition-delay: 0.1s; }
+    .reveal-delay-2 { transition-delay: 0.2s; }
+    .reveal-delay-3 { transition-delay: 0.3s; }
+
+    /* ────── CURSOR SPARKLE ────── */
+    .sparkle {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      font-size: 0.8rem;
+      animation: sparkleAnim 0.6s ease forwards;
+    }
+
+    @keyframes sparkleAnim {
+      0%   { transform: translate(-50%,-50%) scale(0) rotate(0deg); opacity: 1; }
+      100% { transform: translate(-50%,-100px) scale(1) rotate(180deg); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- ═══ HERO ═══ -->
+  <!-- Floating particles -->
+  <div id="particles"></div>
+
+  <!-- ═══════ HERO ═══════ -->
   <section class="hero">
-    <div class="balloons-wrap">
-      <!-- SVG Balloons "3" and "0" -->
-      <svg class="balloons-svg" viewBox="0 0 340 420" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- Balloon "3" -->
+    <div class="balloons-container">
+      <svg class="balloons-svg" viewBox="0 0 340 430" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- defs for gradient/shine -->
+        <defs>
+          <radialGradient id="g3" cx="38%" cy="30%" r="60%">
+            <stop offset="0%" stop-color="#3d3d3d"/>
+            <stop offset="100%" stop-color="#0a0a0a"/>
+          </radialGradient>
+          <radialGradient id="g0" cx="35%" cy="28%" r="60%">
+            <stop offset="0%" stop-color="#3d3d3d"/>
+            <stop offset="100%" stop-color="#0a0a0a"/>
+          </radialGradient>
+        </defs>
+
+        <!-- ── BALLOON "3" ── -->
         <g>
-          <!-- Upper lobe of 3 -->
-          <ellipse cx="110" cy="88" rx="62" ry="70" fill="#1a1a1a"/>
-          <!-- Lower lobe of 3 -->
-          <ellipse cx="115" cy="225" rx="68" ry="75" fill="#1a1a1a"/>
-          <!-- White cutout to make "3" shape -->
-          <rect x="52" y="88" width="72" height="22" fill="#f9f7f5"/>
-          <ellipse cx="90" cy="88" rx="42" ry="50" fill="#f9f7f5"/>
-          <ellipse cx="90" cy="225" rx="42" ry="52" fill="#f9f7f5"/>
-          <rect x="52" y="205" width="72" height="22" fill="#f9f7f5"/>
-          <!-- Shine -->
-          <ellipse cx="90" cy="60" rx="18" ry="12" fill="#3a3a3a" opacity="0.6"/>
-          <ellipse cx="78" cy="52" rx="8" ry="6" fill="#666" opacity="0.4"/>
+          <!-- Upper bulge -->
+          <ellipse cx="112" cy="90" rx="64" ry="68" fill="url(#g3)"/>
+          <!-- Lower bulge -->
+          <ellipse cx="118" cy="228" rx="68" ry="74" fill="url(#g3)"/>
+          <!-- Upper hole -->
+          <ellipse cx="88" cy="90" rx="44" ry="50" fill="#f8f6f2"/>
+          <!-- Lower hole -->
+          <ellipse cx="88" cy="228" rx="44" ry="52" fill="#f8f6f2"/>
+          <!-- Center bar cutout -->
+          <rect x="50" y="155" width="78" height="20" fill="#f8f6f2"/>
+          <!-- Shine spots -->
+          <ellipse cx="83" cy="60" rx="22" ry="14" fill="white" opacity="0.08"/>
+          <ellipse cx="72" cy="52" rx="10" ry="7" fill="white" opacity="0.12"/>
+          <ellipse cx="83" cy="198" rx="20" ry="12" fill="white" opacity="0.06"/>
           <!-- Knot -->
-          <ellipse cx="118" cy="298" rx="8" ry="6" fill="#1a1a1a"/>
-          <!-- String -->
-          <path d="M118 304 Q108 340 118 370 Q128 395 115 420" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <ellipse cx="119" cy="300" rx="7" ry="5" fill="#0a0a0a"/>
+          <!-- String with curl -->
+          <path d="M119 305 Q105 335 118 360 Q131 385 116 415" stroke="#1a1a1a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
         </g>
 
-        <!-- Balloon "0" -->
-        <g transform="translate(150, 30)">
-          <!-- Outer ellipse of 0 -->
-          <ellipse cx="95" cy="145" rx="72" ry="120" fill="#1a1a1a"/>
-          <!-- Inner cutout -->
-          <ellipse cx="95" cy="145" rx="42" ry="82" fill="#f9f7f5"/>
+        <!-- ── BALLOON "0" ── -->
+        <g transform="translate(155, 18)">
+          <!-- Outer shape -->
+          <ellipse cx="92" cy="148" rx="72" ry="122" fill="url(#g0)"/>
+          <!-- Inner hole -->
+          <ellipse cx="92" cy="148" rx="42" ry="84" fill="#f8f6f2"/>
           <!-- Shine -->
-          <ellipse cx="72" cy="80" rx="20" ry="14" fill="#3a3a3a" opacity="0.6"/>
-          <ellipse cx="62" cy="70" rx="9" ry="7" fill="#666" opacity="0.4"/>
+          <ellipse cx="66" cy="82" rx="22" ry="15" fill="white" opacity="0.08"/>
+          <ellipse cx="56" cy="72" rx="10" ry="7" fill="white" opacity="0.12"/>
           <!-- Knot -->
-          <ellipse cx="95" cy="264" rx="8" ry="6" fill="#1a1a1a"/>
+          <ellipse cx="92" cy="268" rx="7" ry="5" fill="#0a0a0a"/>
           <!-- String -->
-          <path d="M95 270 Q85 305 95 335 Q105 358 92 388" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+          <path d="M92 273 Q78 305 92 332 Q106 357 90 390" stroke="#1a1a1a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
         </g>
       </svg>
     </div>
 
-    <div class="hero-text">
-      <p class="hero-eyebrow">Você está convidado para</p>
+    <div class="hero-content">
+      <p class="hero-eyebrow">você está convidado para</p>
       <h1 class="hero-name">Larissa faz 30</h1>
-      <p class="hero-subtitle">uma noite para celebrar</p>
-      <div class="hero-divider"></div>
-      <div class="hero-details">
-        <span>25 de abril<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">2026</small></span>
-        <span class="sep">|</span>
-        <span>Sábado<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">20h00</small></span>
-        <span class="sep">|</span>
-        <span>Ribeirão Preto<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">SP</small></span>
-      </div>
-    </div>
-
-    <div class="scroll-cue">
-      <span>Ver mais</span>
-      <svg viewBox="0 0 14 20" fill="none"><path d="M7 1v14M1 9l6 8 6-8" stroke="#0e0e0e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-    </div>
-  </section>
-
-  <!-- ═══ INFO ═══ -->
-  <section class="info-section fade-in">
-    <p class="section-label">Sobre o evento</p>
-    <div class="info-grid">
-      <div class="info-item">
-        <p class="label">Data</p>
-        <p class="value">25 de Abril<small>Sábado</small></p>
-      </div>
-      <div class="info-item">
-        <p class="label">Horário</p>
-        <p class="value">20h00<small>até a última hora</small></p>
-      </div>
-      <div class="info-item">
-        <p class="label">Local</p>
-        <p class="value">A confirmar<small>Ribeirão Preto</small></p>
-        <a class="map-btn" href="#" target="_blank">
-          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
-          Ver no mapa
-        </a>
-      </div>
-      <div class="info-item">
-        <p class="label">Dress code</p>
-        <p class="value">Preto &amp; Branco<small>obrigatório ✦</small></p>
-      </div>
-    </div>
-  </section>
-
-  <!-- ═══ RSVP ═══ -->
-  <section class="rsvp-section fade-in">
-    <p class="section-label">Confirmar presença</p>
-    <p class="rsvp-intro">Confirme até <em>15 de abril</em> para garantir seu lugar nessa noite especial.</p>
-
-    <form id="rsvp-form" onsubmit="submitRSVP(event)">
-      <div class="form-group">
-        <label>Seu nome completo</label>
-        <input type="text" placeholder="Como você gostaria de ser chamado(a)" required/>
-      </div>
-
-      <div class="form-group">
-        <label>WhatsApp</label>
-        <input type="tel" placeholder="(99) 99999-9999" required/>
-      </div>
-
-      <div class="form-group">
-        <label>Você vai comparecer?</label>
-        <div class="radio-group">
-          <div class="radio-opt">
-            <input type="radio" name="presence" id="sim" value="sim" required/>
-            <label for="sim">✓ Sim, estarei lá</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="presence" id="nao" value="nao"/>
-            <label for="nao">✗ Não poderei ir</label>
-          </div>
+      <p class="hero-age">uma noite especial</p>
+      <div class="hero-line"></div>
+      <div class="hero-pills">
+        <div class="hero-pill">
+          <span class="pill-val">25 abr</span>
+          <span class="pill-label">2026</span>
+        </div>
+        <div class="hero-sep"></div>
+        <div class="hero-pill">
+          <span class="pill-val">Sábado</span>
+          <span class="pill-label">20h00</span>
+        </div>
+        <div class="hero-sep"></div>
+        <div class="hero-pill">
+          <span class="pill-val">Ribeirão</span>
+          <span class="pill-label">Preto · SP</span>
         </div>
       </div>
+    </div>
 
-      <div class="form-group" id="acomp-group" style="display:none;">
-        <label>Vai com acompanhante?</label>
-        <div class="radio-group">
-          <div class="radio-opt">
-            <input type="radio" name="acompanhante" id="ac-sim" value="sim"/>
-            <label for="ac-sim">Sim</label>
-          </div>
-          <div class="radio-opt">
-            <input type="radio" name="acompanhante" id="ac-nao" value="nao"/>
-            <label for="ac-nao">Não</label>
-          </div>
-        </div>
-      </div>
-
-      <div class="form-group">
-        <label>Mensagem para a aniversariante <span style="font-size:0.5rem;opacity:.5;">(opcional)</span></label>
-        <textarea placeholder="Escreva algo carinhoso..."></textarea>
-      </div>
-
-      <button type="submit" class="btn-submit" id="submit-btn">Confirmar presença</button>
-    </form>
-
-    <div class="success-msg" id="success-msg">
-      <div class="check">🎈</div>
-      <h3>Até lá!</h3>
-      <p>Sua presença foi confirmada.<br/>Mal podemos esperar para celebrar juntos.</p>
+    <div class="scroll-hint">
+      <span>Deslize</span>
+      <div class="arrow"></div>
     </div>
   </section>
+
+  <!-- ═══════ DETAILS ═══════ -->
+  <div class="section-wrap">
+    <div class="details-section reveal">
+      <p class="sec-eyebrow">Sobre o evento</p>
+      <div class="detail-cards">
+        <div class="detail-card reveal reveal-delay-1">
+          <span class="dc-icon">📅</span>
+          <p class="dc-label">Data</p>
+          <p class="dc-val">25 de Abril<span class="dc-sub">Sábado</span></p>
+        </div>
+        <div class="detail-card reveal reveal-delay-2">
+          <span class="dc-icon">🕗</span>
+          <p class="dc-label">Horário</p>
+          <p class="dc-val">20h00<span class="dc-sub">até a madrugada</span></p>
+        </div>
+        <div class="detail-card reveal reveal-delay-1">
+          <span class="dc-icon">📍</span>
+          <p class="dc-label">Local</p>
+          <p class="dc-val">A confirmar<span class="dc-sub">Ribeirão Preto · SP</span></p>
+          <a class="map-link" href="#" target="_blank">ver no mapa ↗</a>
+        </div>
+        <div class="detail-card reveal reveal-delay-2">
+          <span class="dc-icon">🖤</span>
+          <p class="dc-label">Dress code</p>
+          <p class="dc-val">Preto &amp; Branco<span class="dc-sub">obrigatório ✦</span></p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ COUNTDOWN ═══════ -->
+  <div class="section-wrap">
+    <div class="countdown-section reveal">
+      <p class="sec-eyebrow">Faltam...</p>
+      <p class="countdown-intro">cada dia que passa é<br/>um dia a menos para celebrar</p>
+      <div class="countdown-grid">
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-days">--</span>
+          <span class="cd-label">dias</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-hours">--</span>
+          <span class="cd-label">horas</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-mins">--</span>
+          <span class="cd-label">min</span>
+        </div>
+        <span class="cd-sep">:</span>
+        <div class="cd-unit">
+          <span class="cd-num" id="cd-secs">--</span>
+          <span class="cd-label">seg</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ═══════ RSVP ═══════ -->
+  <div class="section-wrap">
+    <div class="rsvp-section reveal">
+      <p class="sec-eyebrow">Confirmar presença</p>
+      <h2 class="rsvp-heading">Você vai?</h2>
+      <p class="rsvp-sub">Confirme até <em>15 de abril</em> para garantirmos seu lugar nessa noite.</p>
+
+      <form id="rsvp-form" onsubmit="handleSubmit(event)" novalidate>
+        <div class="field">
+          <label>Nome completo</label>
+          <input type="text" id="f-nome" placeholder="Como gostaria de ser chamado(a)" required/>
+        </div>
+        <div class="field">
+          <label>WhatsApp</label>
+          <input type="tel" id="f-tel" placeholder="(99) 99999-9999" required/>
+        </div>
+        <div class="field">
+          <label>Você vai comparecer?</label>
+          <div class="choice-group">
+            <div class="choice-opt">
+              <input type="radio" name="presence" id="p-sim" value="sim" required/>
+              <label for="p-sim">✓ &nbsp;Sim, estarei lá</label>
+            </div>
+            <div class="choice-opt">
+              <input type="radio" name="presence" id="p-nao" value="nao"/>
+              <label for="p-nao">✗ &nbsp;Não poderei ir</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field sub-field" id="acomp-wrap">
+          <label>Vai com acompanhante?</label>
+          <div class="choice-group">
+            <div class="choice-opt">
+              <input type="radio" name="acomp" id="a-sim" value="sim"/>
+              <label for="a-sim">Sim</label>
+            </div>
+            <div class="choice-opt">
+              <input type="radio" name="acomp" id="a-nao" value="nao"/>
+              <label for="a-nao">Não</label>
+            </div>
+          </div>
+        </div>
+
+        <div class="field">
+          <label>Mensagem para a Larissa <span style="opacity:.4;font-size:.8em;">(opcional)</span></label>
+          <textarea id="f-msg" placeholder="Escreva algo carinhoso..."></textarea>
+        </div>
+
+        <button type="submit" class="btn-submit" id="submit-btn">
+          Confirmar minha presença
+        </button>
+      </form>
+
+      <div class="success-state" id="success-state">
+        <div class="s-icon">🎈</div>
+        <h3>Até lá!</h3>
+        <p>Sua presença foi registrada.<br/>Mal podemos esperar para celebrar juntos.</p>
+      </div>
+    </div>
+  </div>
 
   <footer>
-    <p>Larissa · 30 anos · 25 de abril de 2026</p>
+    <p>Larissa · 30 anos · 25 de abril de 2026 · Ribeirão Preto</p>
   </footer>
 
   <script>
-    // Show/hide acompanhante field
+    // ── Particles
+    (function() {
+      const container = document.getElementById('particles');
+      const chars = ['✦','·','∘','⋆','•'];
+      for (let i = 0; i < 18; i++) {
+        const el = document.createElement('div');
+        el.className = 'particle';
+        const size = Math.random() * 4 + 2;
+        const left = Math.random() * 100;
+        const dur = Math.random() * 12 + 10;
+        const delay = Math.random() * 8;
+        const dx = (Math.random() - 0.5) * 80;
+        el.style.cssText = `
+          left:${left}%;
+          width:${size}px; height:${size}px;
+          background: rgba(0,0,0,${Math.random() * 0.12 + 0.04});
+          animation-duration:${dur}s;
+          animation-delay:${delay}s;
+          --dx:${dx}px;
+        `;
+        container.appendChild(el);
+      }
+    })();
+
+    // ── Countdown
+    function updateCountdown() {
+      const target = new Date('2026-04-25T20:00:00-03:00');
+      const now = new Date();
+      const diff = target - now;
+      if (diff <= 0) {
+        document.getElementById('cd-days').textContent = '00';
+        document.getElementById('cd-hours').textContent = '00';
+        document.getElementById('cd-mins').textContent = '00';
+        document.getElementById('cd-secs').textContent = '00';
+        return;
+      }
+      const d = Math.floor(diff / 86400000);
+      const h = Math.floor((diff % 86400000) / 3600000);
+      const m = Math.floor((diff % 3600000) / 60000);
+      const s = Math.floor((diff % 60000) / 1000);
+      document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
+      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
+      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
+      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 1000);
+
+    // ── Presence toggle
     document.querySelectorAll('input[name="presence"]').forEach(r => {
       r.addEventListener('change', () => {
-        const grp = document.getElementById('acomp-group');
-        grp.style.display = r.value === 'sim' ? 'block' : 'none';
+        const wrap = document.getElementById('acomp-wrap');
+        if (r.value === 'sim') wrap.classList.add('visible');
+        else wrap.classList.remove('visible');
       });
     });
 
-    // RSVP submit
-    function submitRSVP(e) {
+    // ── RSVP submit
+    function handleSubmit(e) {
       e.preventDefault();
       const btn = document.getElementById('submit-btn');
       btn.disabled = true;
       btn.textContent = 'Enviando...';
       setTimeout(() => {
         document.getElementById('rsvp-form').style.display = 'none';
-        document.getElementById('success-msg').style.display = 'block';
-      }, 800);
+        const s = document.getElementById('success-state');
+        s.style.display = 'block';
+      }, 700);
     }
 
-    // Fade in on scroll
-    const observer = new IntersectionObserver((entries) => {
+    // ── Scroll reveal
+    const observer = new IntersectionObserver(entries => {
       entries.forEach(e => {
         if (e.isIntersecting) {
-          e.target.classList.add('visible');
+          e.target.classList.add('shown');
           observer.unobserve(e.target);
         }
       });
-    }, { threshold: 0.12 });
+    }, { threshold: 0.1 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
 
-    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+    // ── Touch sparkle (mobile)
+    document.addEventListener('touchstart', e => {
+      const t = e.touches[0];
+      const spark = document.createElement('div');
+      spark.className = 'sparkle';
+      spark.textContent = ['✦','✧','·','⋆'][Math.floor(Math.random()*4)];
+      spark.style.left = t.clientX + 'px';
+      spark.style.top = t.clientY + 'px';
+      document.body.appendChild(spark);
+      setTimeout(() => spark.remove(), 600);
+    }, { passive: true });
   </script>
 </body>
 </html>
