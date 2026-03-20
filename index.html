@@ -791,7 +791,12 @@
       <h2 class="rsvp-heading">Você vai?</h2>
       <p class="rsvp-sub">Confirme até <em>15 de abril</em> para garantirmos seu lugar nessa noite.</p>
 
-      <form id="rsvp-form" onsubmit="handleSubmit(event)" novalidate>
+      <form id="rsvp-form" action="https://formsubmit.co/dev@rafaelantun.es" method="POST" onsubmit="handleSubmit(event)" novalidate>
+        <input type="hidden" name="_subject" value="RSVP Aniversário Larissa 30 🎈"/>
+        <input type="hidden" name="_captcha" value="false"/>
+        <input type="hidden" name="_template" value="table"/>
+        <input type="hidden" name="convidado" id="hidden-guest"/>
+        <input type="hidden" name="resposta_url" id="hidden-url"/>
         <div class="field">
           <label>Nome completo</label>
           <input type="text" id="f-nome" placeholder="Como gostaria de ser chamado(a)" required/>
@@ -851,6 +856,36 @@
   </footer>
 
   <script>
+
+    // ── Personalization from URL
+    const urlParams = new URLSearchParams(window.location.search);
+    const guestName = urlParams.get('convidado') || urlParams.get('nome') || urlParams.get('guest') || '';
+    const guestFirst = guestName ? guestName.split(' ')[0] : '';
+
+    function applyPersonalization() {
+      if (!guestName) return;
+
+      // Update hero eyebrow
+      const eyebrow = document.querySelector('.hero-eyebrow');
+      if (eyebrow) eyebrow.textContent = guestFirst + ', você está convidado(a) para';
+
+      // Update RSVP heading
+      const heading = document.querySelector('.rsvp-heading');
+      if (heading) heading.textContent = guestFirst + ', você vai?';
+
+      // Pre-fill name field
+      const nameInput = document.getElementById('f-nome');
+      if (nameInput) {
+        nameInput.value = guestName;
+        nameInput.style.color = 'var(--black)';
+      }
+
+      // Update page title
+      document.title = guestFirst + ' · Larissa faz 30 ✦';
+    }
+
+    document.addEventListener('DOMContentLoaded', applyPersonalization);
+
     // ── Particles
     (function() {
       const container = document.getElementById('particles');
@@ -910,15 +945,39 @@
 
     // ── RSVP submit
     function handleSubmit(e) {
-      e.preventDefault();
       const btn = document.getElementById('submit-btn');
+
+      // Populate hidden fields
+      const hiddenGuest = document.getElementById('hidden-guest');
+      const hiddenUrl = document.getElementById('hidden-url');
+      if (hiddenGuest) hiddenGuest.value = guestName || 'Não identificado';
+      if (hiddenUrl) hiddenUrl.value = window.location.href;
+
       btn.disabled = true;
       btn.textContent = 'Enviando...';
-      setTimeout(() => {
-        document.getElementById('rsvp-form').style.display = 'none';
+
+      // If guestName exists, let form submit naturally (FormSubmit)
+      // but intercept to show success state instead of redirect
+      e.preventDefault();
+
+      const form = document.getElementById('rsvp-form');
+      const formData = new FormData(form);
+
+      fetch('https://formsubmit.co/ajax/dev@rafaelantun.es', {
+        method: 'POST',
+        body: formData,
+        headers: { 'Accept': 'application/json' }
+      }).catch(() => {}).finally(() => {
+        form.style.display = 'none';
         const s = document.getElementById('success-state');
         s.style.display = 'block';
-      }, 700);
+
+        // Personalize success message
+        if (guestFirst) {
+          const h3 = s.querySelector('h3');
+          if (h3) h3.textContent = 'Até lá, ' + guestFirst + '!';
+        }
+      });
     }
 
     // ── Scroll reveal
