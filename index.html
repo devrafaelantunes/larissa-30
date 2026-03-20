@@ -1,0 +1,584 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+  <title>Larissa faz 30 🎈</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300&family=Dancing+Script:wght@500&family=Montserrat:wght@200;300;400;600&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --black: #0e0e0e;
+      --white: #f9f7f5;
+      --gray: #d4d0cb;
+      --mid: #8a8680;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--white);
+      color: var(--black);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      min-height: 100vh;
+      overflow-x: hidden;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      min-height: 100svh;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: flex-end;
+      padding: 0 24px 48px;
+      position: relative;
+      overflow: hidden;
+      background: var(--white);
+    }
+
+    .balloons-wrap {
+      position: absolute;
+      top: 0; left: 0; right: 0; bottom: 0;
+      display: flex;
+      align-items: flex-start;
+      justify-content: center;
+      padding-top: 40px;
+      pointer-events: none;
+    }
+
+    .balloons-svg {
+      width: 85%;
+      max-width: 360px;
+      height: auto;
+    }
+
+    .hero-text {
+      position: relative;
+      z-index: 2;
+      text-align: center;
+      width: 100%;
+    }
+
+    .hero-eyebrow {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 10px;
+    }
+
+    .hero-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.8rem, 11vw, 4.2rem);
+      font-weight: 500;
+      color: var(--black);
+      line-height: 1;
+      margin-bottom: 6px;
+    }
+
+    .hero-subtitle {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-weight: 300;
+      font-size: clamp(1rem, 4vw, 1.25rem);
+      color: var(--mid);
+      margin-bottom: 28px;
+    }
+
+    .hero-divider {
+      width: 1px;
+      height: 32px;
+      background: var(--black);
+      margin: 0 auto 28px;
+      opacity: 0.3;
+    }
+
+    .hero-details {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-weight: 300;
+      font-size: clamp(0.78rem, 3.2vw, 0.9rem);
+      letter-spacing: 0.08em;
+      color: var(--black);
+    }
+
+    .hero-details span {
+      padding: 0 14px;
+      text-align: center;
+      line-height: 1.4;
+    }
+
+    .hero-details .sep {
+      color: var(--gray);
+      padding: 0;
+      font-size: 1rem;
+    }
+
+    .scroll-cue {
+      position: absolute;
+      bottom: 16px;
+      left: 50%;
+      transform: translateX(-50%);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 4px;
+      opacity: 0.35;
+      animation: float 2s ease-in-out infinite;
+    }
+
+    .scroll-cue span {
+      font-size: 0.55rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+    }
+
+    .scroll-cue svg { width: 14px; }
+
+    @keyframes float {
+      0%,100% { transform: translateX(-50%) translateY(0); }
+      50% { transform: translateX(-50%) translateY(6px); }
+    }
+
+    /* ── SECTIONS ── */
+    section {
+      padding: 64px 24px;
+      max-width: 480px;
+      margin: 0 auto;
+    }
+
+    .section-label {
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 200;
+      font-size: 0.6rem;
+      letter-spacing: 0.4em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 20px;
+    }
+
+    /* ── INFO ── */
+    .info-section { border-top: 1px solid var(--gray); }
+
+    .info-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 32px 20px;
+    }
+
+    .info-item {}
+    .info-item .label {
+      font-size: 0.6rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      color: var(--mid);
+      margin-bottom: 6px;
+      font-weight: 300;
+    }
+
+    .info-item .value {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.1rem;
+      font-weight: 400;
+      line-height: 1.35;
+      color: var(--black);
+    }
+
+    .info-item .value small {
+      display: block;
+      font-size: 0.85rem;
+      color: var(--mid);
+      font-style: italic;
+      margin-top: 2px;
+    }
+
+    .map-btn {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      margin-top: 8px;
+      font-size: 0.62rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      color: var(--black);
+      text-decoration: none;
+      border-bottom: 1px solid var(--black);
+      padding-bottom: 2px;
+      transition: opacity .2s;
+    }
+    .map-btn:hover { opacity: 0.5; }
+
+    /* ── RSVP ── */
+    .rsvp-section { border-top: 1px solid var(--gray); }
+
+    .rsvp-intro {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(1.2rem, 5vw, 1.5rem);
+      font-weight: 300;
+      line-height: 1.5;
+      color: var(--black);
+      margin-bottom: 32px;
+    }
+
+    .rsvp-intro em {
+      font-style: italic;
+      color: var(--mid);
+    }
+
+    .form-group { margin-bottom: 20px; }
+
+    .form-group label {
+      display: block;
+      font-size: 0.58rem;
+      letter-spacing: 0.3em;
+      text-transform: uppercase;
+      font-weight: 300;
+      color: var(--mid);
+      margin-bottom: 8px;
+    }
+
+    .form-group input,
+    .form-group select,
+    .form-group textarea {
+      width: 100%;
+      background: transparent;
+      border: none;
+      border-bottom: 1px solid var(--gray);
+      padding: 10px 0;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      font-weight: 400;
+      color: var(--black);
+      outline: none;
+      border-radius: 0;
+      transition: border-color .2s;
+      -webkit-appearance: none;
+    }
+
+    .form-group select {
+      cursor: pointer;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus,
+    .form-group textarea:focus {
+      border-color: var(--black);
+    }
+
+    .form-group textarea {
+      resize: none;
+      height: 60px;
+      line-height: 1.5;
+    }
+
+    ::placeholder { color: var(--gray); font-style: italic; }
+
+    .radio-group {
+      display: flex;
+      gap: 12px;
+    }
+
+    .radio-opt {
+      flex: 1;
+      position: relative;
+    }
+
+    .radio-opt input[type="radio"] {
+      position: absolute;
+      opacity: 0;
+      width: 0;
+    }
+
+    .radio-opt label {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 12px 8px;
+      border: 1px solid var(--gray);
+      font-size: 0.65rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      cursor: pointer;
+      transition: all .2s;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      color: var(--mid);
+    }
+
+    .radio-opt input[type="radio"]:checked + label {
+      background: var(--black);
+      border-color: var(--black);
+      color: var(--white);
+    }
+
+    .btn-submit {
+      width: 100%;
+      padding: 16px;
+      background: var(--black);
+      color: var(--white);
+      border: none;
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.65rem;
+      letter-spacing: 0.35em;
+      text-transform: uppercase;
+      cursor: pointer;
+      margin-top: 28px;
+      transition: opacity .2s;
+    }
+    .btn-submit:hover { opacity: 0.75; }
+    .btn-submit:disabled { opacity: 0.4; cursor: not-allowed; }
+
+    /* ── SUCCESS ── */
+    .success-msg {
+      display: none;
+      text-align: center;
+      padding: 40px 0;
+    }
+
+    .success-msg .check {
+      font-size: 2rem;
+      margin-bottom: 16px;
+    }
+
+    .success-msg h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2rem;
+      font-weight: 500;
+      margin-bottom: 8px;
+    }
+
+    .success-msg p {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1rem;
+      color: var(--mid);
+      font-style: italic;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      border-top: 1px solid var(--gray);
+      text-align: center;
+      padding: 32px 24px 48px;
+      font-size: 0.58rem;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      color: var(--gray);
+      font-weight: 300;
+    }
+
+    /* ── ANIMATIONS ── */
+    .fade-in {
+      opacity: 0;
+      transform: translateY(20px);
+      transition: opacity 0.6s ease, transform 0.6s ease;
+    }
+    .fade-in.visible {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  </style>
+</head>
+<body>
+
+  <!-- ═══ HERO ═══ -->
+  <section class="hero">
+    <div class="balloons-wrap">
+      <!-- SVG Balloons "3" and "0" -->
+      <svg class="balloons-svg" viewBox="0 0 340 420" fill="none" xmlns="http://www.w3.org/2000/svg">
+        <!-- Balloon "3" -->
+        <g>
+          <!-- Upper lobe of 3 -->
+          <ellipse cx="110" cy="88" rx="62" ry="70" fill="#1a1a1a"/>
+          <!-- Lower lobe of 3 -->
+          <ellipse cx="115" cy="225" rx="68" ry="75" fill="#1a1a1a"/>
+          <!-- White cutout to make "3" shape -->
+          <rect x="52" y="88" width="72" height="22" fill="#f9f7f5"/>
+          <ellipse cx="90" cy="88" rx="42" ry="50" fill="#f9f7f5"/>
+          <ellipse cx="90" cy="225" rx="42" ry="52" fill="#f9f7f5"/>
+          <rect x="52" y="205" width="72" height="22" fill="#f9f7f5"/>
+          <!-- Shine -->
+          <ellipse cx="90" cy="60" rx="18" ry="12" fill="#3a3a3a" opacity="0.6"/>
+          <ellipse cx="78" cy="52" rx="8" ry="6" fill="#666" opacity="0.4"/>
+          <!-- Knot -->
+          <ellipse cx="118" cy="298" rx="8" ry="6" fill="#1a1a1a"/>
+          <!-- String -->
+          <path d="M118 304 Q108 340 118 370 Q128 395 115 420" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+
+        <!-- Balloon "0" -->
+        <g transform="translate(150, 30)">
+          <!-- Outer ellipse of 0 -->
+          <ellipse cx="95" cy="145" rx="72" ry="120" fill="#1a1a1a"/>
+          <!-- Inner cutout -->
+          <ellipse cx="95" cy="145" rx="42" ry="82" fill="#f9f7f5"/>
+          <!-- Shine -->
+          <ellipse cx="72" cy="80" rx="20" ry="14" fill="#3a3a3a" opacity="0.6"/>
+          <ellipse cx="62" cy="70" rx="9" ry="7" fill="#666" opacity="0.4"/>
+          <!-- Knot -->
+          <ellipse cx="95" cy="264" rx="8" ry="6" fill="#1a1a1a"/>
+          <!-- String -->
+          <path d="M95 270 Q85 305 95 335 Q105 358 92 388" stroke="#1a1a1a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+        </g>
+      </svg>
+    </div>
+
+    <div class="hero-text">
+      <p class="hero-eyebrow">Você está convidado para</p>
+      <h1 class="hero-name">Larissa faz 30</h1>
+      <p class="hero-subtitle">uma noite para celebrar</p>
+      <div class="hero-divider"></div>
+      <div class="hero-details">
+        <span>25 de abril<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">2026</small></span>
+        <span class="sep">|</span>
+        <span>Sábado<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">20h00</small></span>
+        <span class="sep">|</span>
+        <span>Ribeirão Preto<br/><small style="font-family:'Montserrat';font-weight:200;font-size:0.7em;letter-spacing:0.1em;color:#8a8680;">SP</small></span>
+      </div>
+    </div>
+
+    <div class="scroll-cue">
+      <span>Ver mais</span>
+      <svg viewBox="0 0 14 20" fill="none"><path d="M7 1v14M1 9l6 8 6-8" stroke="#0e0e0e" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"/></svg>
+    </div>
+  </section>
+
+  <!-- ═══ INFO ═══ -->
+  <section class="info-section fade-in">
+    <p class="section-label">Sobre o evento</p>
+    <div class="info-grid">
+      <div class="info-item">
+        <p class="label">Data</p>
+        <p class="value">25 de Abril<small>Sábado</small></p>
+      </div>
+      <div class="info-item">
+        <p class="label">Horário</p>
+        <p class="value">20h00<small>até a última hora</small></p>
+      </div>
+      <div class="info-item">
+        <p class="label">Local</p>
+        <p class="value">A confirmar<small>Ribeirão Preto</small></p>
+        <a class="map-btn" href="#" target="_blank">
+          <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+          Ver no mapa
+        </a>
+      </div>
+      <div class="info-item">
+        <p class="label">Dress code</p>
+        <p class="value">Preto &amp; Branco<small>obrigatório ✦</small></p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ═══ RSVP ═══ -->
+  <section class="rsvp-section fade-in">
+    <p class="section-label">Confirmar presença</p>
+    <p class="rsvp-intro">Confirme até <em>15 de abril</em> para garantir seu lugar nessa noite especial.</p>
+
+    <form id="rsvp-form" onsubmit="submitRSVP(event)">
+      <div class="form-group">
+        <label>Seu nome completo</label>
+        <input type="text" placeholder="Como você gostaria de ser chamado(a)" required/>
+      </div>
+
+      <div class="form-group">
+        <label>WhatsApp</label>
+        <input type="tel" placeholder="(99) 99999-9999" required/>
+      </div>
+
+      <div class="form-group">
+        <label>Você vai comparecer?</label>
+        <div class="radio-group">
+          <div class="radio-opt">
+            <input type="radio" name="presence" id="sim" value="sim" required/>
+            <label for="sim">✓ Sim, estarei lá</label>
+          </div>
+          <div class="radio-opt">
+            <input type="radio" name="presence" id="nao" value="nao"/>
+            <label for="nao">✗ Não poderei ir</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group" id="acomp-group" style="display:none;">
+        <label>Vai com acompanhante?</label>
+        <div class="radio-group">
+          <div class="radio-opt">
+            <input type="radio" name="acompanhante" id="ac-sim" value="sim"/>
+            <label for="ac-sim">Sim</label>
+          </div>
+          <div class="radio-opt">
+            <input type="radio" name="acompanhante" id="ac-nao" value="nao"/>
+            <label for="ac-nao">Não</label>
+          </div>
+        </div>
+      </div>
+
+      <div class="form-group">
+        <label>Mensagem para a aniversariante <span style="font-size:0.5rem;opacity:.5;">(opcional)</span></label>
+        <textarea placeholder="Escreva algo carinhoso..."></textarea>
+      </div>
+
+      <button type="submit" class="btn-submit" id="submit-btn">Confirmar presença</button>
+    </form>
+
+    <div class="success-msg" id="success-msg">
+      <div class="check">🎈</div>
+      <h3>Até lá!</h3>
+      <p>Sua presença foi confirmada.<br/>Mal podemos esperar para celebrar juntos.</p>
+    </div>
+  </section>
+
+  <footer>
+    <p>Larissa · 30 anos · 25 de abril de 2026</p>
+  </footer>
+
+  <script>
+    // Show/hide acompanhante field
+    document.querySelectorAll('input[name="presence"]').forEach(r => {
+      r.addEventListener('change', () => {
+        const grp = document.getElementById('acomp-group');
+        grp.style.display = r.value === 'sim' ? 'block' : 'none';
+      });
+    });
+
+    // RSVP submit
+    function submitRSVP(e) {
+      e.preventDefault();
+      const btn = document.getElementById('submit-btn');
+      btn.disabled = true;
+      btn.textContent = 'Enviando...';
+      setTimeout(() => {
+        document.getElementById('rsvp-form').style.display = 'none';
+        document.getElementById('success-msg').style.display = 'block';
+      }, 800);
+    }
+
+    // Fade in on scroll
+    const observer = new IntersectionObserver((entries) => {
+      entries.forEach(e => {
+        if (e.isIntersecting) {
+          e.target.classList.add('visible');
+          observer.unobserve(e.target);
+        }
+      });
+    }, { threshold: 0.12 });
+
+    document.querySelectorAll('.fade-in').forEach(el => observer.observe(el));
+  </script>
+</body>
+</html>
