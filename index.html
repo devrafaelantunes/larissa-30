@@ -8,444 +8,478 @@
   <title>Larissa faz 30 ✦</title>
   <link rel="preconnect" href="https://fonts.googleapis.com"/>
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@500;600&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet"/>
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Cormorant+Garamond:ital,wght@0,300;0,400;1,300;1,400&family=Dancing+Script:wght@500;600;700&family=Montserrat:wght@200;300;400&display=swap" rel="stylesheet"/>
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-
     :root {
-      --black: #0d0d0d;
-      --off-white: #f8f6f2;
-      --warm-gray: #c8c4bc;
-      --mid: #8a8680;
-      --light: #e8e5e0;
+      --black: #080808;
+      --white: #f5f0e8;
+      --gold: #d4a843;
+      --gold-light: #f0cc70;
+      --gold-dark: #a07828;
+      --gray: #c0bab0;
+      --mid: #7a7268;
+      --light: #e8e3d8;
     }
-
     html { scroll-behavior: smooth; }
-
     body {
-      background: var(--off-white);
+      background: var(--white);
       color: var(--black);
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
       overflow-x: hidden;
     }
 
-    /* ────── PARTICLES ────── */
-    #particles {
+    /* canvas */
+    #canvas {
       position: fixed;
       inset: 0;
       pointer-events: none;
       z-index: 0;
-      overflow: hidden;
     }
 
-    .particle {
-      position: absolute;
-      border-radius: 50%;
-      animation: drift linear infinite;
-      opacity: 0;
-    }
-
-    @keyframes drift {
-      0%   { transform: translateY(110vh) translateX(0) rotate(0deg); opacity: 0; }
-      10%  { opacity: 1; }
-      90%  { opacity: 0.6; }
-      100% { transform: translateY(-10vh) translateX(var(--dx)) rotate(360deg); opacity: 0; }
-    }
-
-    /* ────── HERO ────── */
+    /* ── HERO ── */
     .hero {
       position: relative;
       min-height: 100svh;
+      background: var(--black);
+      overflow: hidden;
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: flex-end;
-      padding-bottom: 52px;
-      overflow: hidden;
-      z-index: 1;
+      justify-content: center;
+      padding: 60px 20px 80px;
     }
 
-    /* Grain texture */
-    .hero::before {
-      content: '';
+    /* Stars */
+    .stars-wrap {
       position: absolute;
       inset: 0;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
-      opacity: 0.4;
+      overflow: hidden;
       pointer-events: none;
-      z-index: 0;
+    }
+    .star {
+      position: absolute;
+      background: var(--gold);
+      border-radius: 50%;
+      animation: twinkle var(--dur,3s) ease-in-out infinite var(--delay,0s);
+      opacity: 0;
+    }
+    @keyframes twinkle {
+      0%,100% { opacity: 0; transform: scale(0.4); }
+      50%      { opacity: var(--max-op,0.5); transform: scale(1); }
     }
 
-    /* Radial glow */
-    .hero::after {
-      content: '';
+    /* Glow blobs */
+    .hero-glow {
       position: absolute;
-      top: 30%;
+      top: 10%;
       left: 50%;
-      transform: translate(-50%, -50%);
-      width: 80vw;
-      height: 80vw;
-      max-width: 500px;
-      max-height: 500px;
-      background: radial-gradient(circle, rgba(0,0,0,0.04) 0%, transparent 70%);
+      transform: translateX(-50%);
+      width: 90vw;
+      height: 90vw;
+      max-width: 560px;
+      max-height: 560px;
+      background: radial-gradient(circle, rgba(212,168,67,0.07) 0%, transparent 68%);
       pointer-events: none;
-      z-index: 0;
     }
-
-    /* ── Balloons ── */
-    .balloons-container {
+    .hero-glow-b {
       position: absolute;
-      top: 0; left: 0; right: 0;
-      height: 72%;
-      display: flex;
-      align-items: flex-start;
-      justify-content: center;
-      padding-top: 5svh;
-      z-index: 1;
+      bottom: 0;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 60vw;
+      height: 40vw;
+      max-width: 360px;
+      background: radial-gradient(circle, rgba(212,168,67,0.04) 0%, transparent 70%);
+      pointer-events: none;
     }
 
-    .balloons-svg {
-      width: min(82vw, 340px);
-      height: auto;
-      filter: drop-shadow(0 20px 40px rgba(0,0,0,0.12));
-      animation: floatBalloons 6s ease-in-out infinite;
+    /* Floating balloon decorations */
+    .bln {
+      position: absolute;
+      font-size: var(--s,2rem);
+      animation: blnFloat var(--d,8s) ease-in-out infinite var(--dl,0s);
+      pointer-events: none;
+      opacity: 0.55;
+      filter: blur(0.3px);
+      z-index: 2;
+    }
+    @keyframes blnFloat {
+      0%,100% { transform: translateY(0) rotate(var(--r,-6deg)); }
+      50%      { transform: translateY(-18px) rotate(var(--r2,5deg)); }
     }
 
-    @keyframes floatBalloons {
-      0%,100% { transform: translateY(0px) rotate(-0.5deg); }
-      50%      { transform: translateY(-12px) rotate(0.5deg); }
-    }
-
-    /* ── Hero Text ── */
+    /* Hero content */
     .hero-content {
       position: relative;
-      z-index: 2;
+      z-index: 3;
       text-align: center;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
       width: 100%;
-      padding: 0 28px;
     }
 
     .hero-eyebrow {
-      font-size: clamp(0.55rem, 2.2vw, 0.65rem);
-      letter-spacing: 0.4em;
+      font-size: clamp(0.48rem,1.8vw,0.58rem);
+      letter-spacing: 0.5em;
       text-transform: uppercase;
       font-weight: 200;
-      color: var(--mid);
-      margin-bottom: 10px;
+      color: rgba(255,255,255,0.32);
+      margin-bottom: 18px;
       animation: fadeUp 1s ease 0.3s both;
     }
 
     .hero-name {
       font-family: 'Dancing Script', cursive;
-      font-size: clamp(3rem, 13vw, 4.5rem);
-      font-weight: 600;
-      color: var(--black);
-      line-height: 1;
-      margin-bottom: 4px;
+      font-size: clamp(3.6rem,17vw,6.5rem);
+      font-weight: 700;
+      color: #fff;
+      line-height: 0.9;
       animation: fadeUp 1s ease 0.5s both;
+      text-shadow: 0 0 80px rgba(212,168,67,0.25), 0 2px 16px rgba(0,0,0,0.6);
     }
 
-    .hero-age {
+    .hero-faz {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1rem, 4.5vw, 1.3rem);
+      font-size: clamp(0.9rem,3.5vw,1.25rem);
       font-weight: 300;
-      color: var(--mid);
-      margin-bottom: 24px;
+      color: rgba(255,255,255,0.4);
+      letter-spacing: 0.55em;
       animation: fadeUp 1s ease 0.7s both;
+      margin: 6px 0 0;
     }
 
-    .hero-line {
-      width: 40px;
+    /* ── THE BIG 30 ── */
+    .hero-30 {
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(8rem,44vw,18rem);
+      font-weight: 900;
+      line-height: 0.82;
+      background: linear-gradient(155deg,
+        #f5d878 0%,
+        #d4a843 28%,
+        #f0cc70 50%,
+        #a07828 72%,
+        #d4a843 86%,
+        #f5d878 100%
+      );
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+      animation: fadeUp 1s ease 0.9s both, goldPulse 5s ease-in-out 2s infinite;
+      margin: 2px 0 24px;
+      position: relative;
+    }
+    @keyframes goldPulse {
+      0%,100% { filter: drop-shadow(0 0 28px rgba(212,168,67,0.3)); }
+      50%      { filter: drop-shadow(0 0 56px rgba(212,168,67,0.55)); }
+    }
+
+    /* Divider */
+    .hero-divider {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 20px;
+      animation: fadeUp 1s ease 1.1s both;
+    }
+    .hero-divider .line {
+      width: 44px;
       height: 1px;
-      background: var(--black);
-      margin: 0 auto 24px;
-      opacity: 0.3;
-      animation: expandLine 1s ease 0.9s both;
+      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.55), transparent);
+    }
+    .hero-divider .diamond {
+      width: 5px; height: 5px;
+      background: var(--gold);
+      transform: rotate(45deg);
     }
 
-    @keyframes expandLine {
-      from { width: 0; opacity: 0; }
-      to   { width: 40px; opacity: 0.3; }
-    }
-
-    .hero-pills {
+    /* Meta row */
+    .hero-meta {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 0;
-      animation: fadeUp 1s ease 1.1s both;
+      animation: fadeUp 1s ease 1.2s both;
     }
-
-    .hero-pill {
+    .hero-meta-item {
       text-align: center;
-      padding: 0 16px;
+      padding: 0 18px;
     }
-
-    .hero-pill .pill-val {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(0.85rem, 3.5vw, 1rem);
-      font-weight: 400;
-      color: var(--black);
+    .hero-meta-item .mv {
       display: block;
+      font-family: 'Cormorant Garamond', serif;
+      font-size: clamp(0.9rem,3.5vw,1.1rem);
+      font-weight: 400;
+      color: rgba(255,255,255,0.85);
     }
-
-    .hero-pill .pill-label {
-      font-size: clamp(0.5rem, 2vw, 0.58rem);
-      letter-spacing: 0.2em;
+    .hero-meta-item .ml {
+      display: block;
+      font-size: clamp(0.43rem,1.5vw,0.5rem);
+      letter-spacing: 0.22em;
       text-transform: uppercase;
       font-weight: 200;
-      color: var(--mid);
-      display: block;
-      margin-top: 2px;
+      color: rgba(255,255,255,0.25);
+      margin-top: 3px;
+    }
+    .hero-meta .vsep {
+      width: 1px; height: 26px;
+      background: rgba(255,255,255,0.1);
     }
 
-    .hero-sep {
-      width: 1px;
-      height: 28px;
-      background: var(--warm-gray);
-    }
-
-    /* Scroll indicator */
-    .scroll-hint {
+    /* Scroll cue */
+    .scroll-cue {
       position: absolute;
       bottom: 18px;
       left: 50%;
       transform: translateX(-50%);
-      z-index: 2;
+      z-index: 3;
       display: flex;
       flex-direction: column;
       align-items: center;
-      gap: 6px;
-      animation: fadeUp 1s ease 1.4s both, pulse 2s ease 2.4s infinite;
+      gap: 8px;
+      animation: fadeUp 1s ease 1.8s both;
     }
-
-    .scroll-hint span {
-      font-size: 0.5rem;
-      letter-spacing: 0.3em;
+    .scroll-cue span {
+      font-size: 0.43rem;
+      letter-spacing: 0.42em;
       text-transform: uppercase;
-      color: var(--mid);
+      color: rgba(255,255,255,0.18);
       font-weight: 200;
     }
-
-    .scroll-hint .arrow {
-      width: 1px;
-      height: 28px;
-      background: linear-gradient(to bottom, var(--mid), transparent);
+    .scroll-cue-line {
+      width: 1px; height: 38px;
+      background: linear-gradient(to bottom, rgba(212,168,67,0.5), transparent);
+      animation: lineBob 2.5s ease-in-out 2s infinite;
     }
-
-    @keyframes pulse {
-      0%,100% { opacity: 0.5; transform: translateX(-50%) translateY(0); }
-      50%      { opacity: 1; transform: translateX(-50%) translateY(5px); }
+    @keyframes lineBob {
+      0%,100% { opacity: 0.5; transform: scaleY(1) translateY(0); }
+      50%      { opacity: 1;   transform: scaleY(1.1) translateY(3px); }
     }
 
     @keyframes fadeUp {
-      from { opacity: 0; transform: translateY(24px); }
+      from { opacity: 0; transform: translateY(22px); }
       to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ────── SECTIONS ────── */
+    /* ── SECTIONS ── */
     .section-wrap {
       position: relative;
       z-index: 1;
       max-width: 520px;
       margin: 0 auto;
-      padding: 0 28px;
+      padding: 0 24px;
     }
 
-    /* ────── DETAILS ────── */
-    .details-section {
-      padding: 56px 0;
-      border-top: 1px solid var(--light);
+    .sec-tag {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 32px;
     }
-
-    .sec-eyebrow {
-      font-size: 0.55rem;
-      letter-spacing: 0.4em;
+    .sec-tag .tag-line { flex: 1; height: 1px; background: var(--light); }
+    .sec-tag .tag-text {
+      font-size: 0.48rem;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
-      font-weight: 200;
+      font-weight: 300;
       color: var(--mid);
-      margin-bottom: 28px;
+      white-space: nowrap;
     }
 
-    .detail-cards {
+    /* ── DETAILS ── */
+    .details-section {
+      padding: 64px 0 56px;
+      border-bottom: 1px solid var(--light);
+    }
+
+    .detail-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 12px;
     }
 
-    .detail-card {
+    .dcard {
       background: #fff;
       border: 1px solid var(--light);
-      padding: 20px 18px;
+      padding: 24px 18px;
       position: relative;
       overflow: hidden;
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      transition: border-color 0.3s, box-shadow 0.3s, transform 0.18s;
     }
-
-    .detail-card:active { transform: scale(0.98); }
-
-    .detail-card::before {
+    .dcard::before {
       content: '';
       position: absolute;
       top: 0; left: 0;
-      width: 2px;
-      height: 0;
-      background: var(--black);
-      transition: height 0.4s ease;
+      width: 100%; height: 2px;
+      background: linear-gradient(90deg, var(--gold-dark), var(--gold-light), var(--gold-dark));
+      transform: scaleX(0);
+      transition: transform 0.4s ease;
     }
+    .dcard:hover { border-color: var(--gray); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+    .dcard:hover::before { transform: scaleX(1); }
+    .dcard:active { transform: scale(0.97); }
 
-    .detail-card:hover::before { height: 100%; }
-
-    .detail-card .dc-icon {
-      font-size: 1.2rem;
-      margin-bottom: 10px;
-      display: block;
-    }
-
-    .detail-card .dc-label {
-      font-size: 0.52rem;
-      letter-spacing: 0.3em;
+    .dcard .d-icon { font-size: 1.5rem; margin-bottom: 14px; display: block; }
+    .dcard .d-label {
+      font-size: 0.46rem;
+      letter-spacing: 0.32em;
       text-transform: uppercase;
       font-weight: 300;
       color: var(--mid);
       margin-bottom: 6px;
     }
-
-    .detail-card .dc-val {
+    .dcard .d-val {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1.05rem;
+      font-size: 1.1rem;
       font-weight: 400;
       line-height: 1.3;
       color: var(--black);
     }
-
-    .detail-card .dc-sub {
+    .dcard .d-sub {
+      display: block;
       font-size: 0.72rem;
       color: var(--mid);
       font-style: italic;
-      margin-top: 2px;
-      display: block;
+      margin-top: 3px;
     }
 
-    .detail-card.full-width {
-      grid-column: 1 / -1;
-    }
-
-    .map-link {
-      display: inline-flex;
-      align-items: center;
-      gap: 5px;
-      margin-top: 6px;
-      font-size: 0.55rem;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      font-weight: 300;
-      color: var(--black);
-      text-decoration: none;
-      border-bottom: 1px solid var(--black);
-      padding-bottom: 1px;
-    }
-
-    /* ────── COUNTDOWN ────── */
+    /* ── COUNTDOWN ── */
     .countdown-section {
-      padding: 48px 0;
-      border-top: 1px solid var(--light);
+      padding: 64px 0;
+      border-bottom: 1px solid var(--light);
       text-align: center;
     }
-
-    .countdown-intro {
+    .cd-quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+      font-size: clamp(1.05rem,4.2vw,1.3rem);
       font-weight: 300;
       color: var(--mid);
-      margin-bottom: 28px;
-      line-height: 1.5;
+      margin-bottom: 40px;
+      line-height: 1.65;
     }
-
-    .countdown-grid {
+    .cd-row {
       display: flex;
       justify-content: center;
-      gap: 4px;
+      align-items: flex-start;
     }
-
-    .cd-unit {
+    .cd-block {
       display: flex;
       flex-direction: column;
       align-items: center;
-      min-width: 60px;
+      width: 72px;
     }
-
     .cd-num {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(2rem, 10vw, 3rem);
-      font-weight: 300;
-      line-height: 1;
+      font-family: 'Playfair Display', serif;
+      font-size: clamp(2.6rem,11vw,3.4rem);
+      font-weight: 700;
       color: var(--black);
-      width: 60px;
+      line-height: 1;
+      min-width: 72px;
       text-align: center;
-      transition: transform 0.3s ease;
     }
-
-    .cd-label {
-      font-size: 0.5rem;
+    .cd-lbl {
+      font-size: 0.44rem;
       letter-spacing: 0.3em;
       text-transform: uppercase;
       font-weight: 200;
       color: var(--mid);
-      margin-top: 4px;
+      margin-top: 6px;
     }
-
-    .cd-sep {
-      font-family: 'Cormorant Garamond', serif;
-      font-size: 2.5rem;
+    .cd-colon {
+      font-family: 'Playfair Display', serif;
+      font-size: 2.6rem;
       font-weight: 300;
-      color: var(--warm-gray);
-      padding-top: 2px;
+      color: var(--light);
+      padding: 0 2px;
+      line-height: 1;
       align-self: flex-start;
     }
 
-    /* ────── RSVP ────── */
-    .rsvp-section {
-      padding: 56px 0 72px;
-      border-top: 1px solid var(--light);
+    /* ── MAP ── */
+    .map-section {
+      padding: 64px 0;
+      border-bottom: 1px solid var(--light);
     }
-
-    .rsvp-heading {
-      font-family: 'Dancing Script', cursive;
-      font-size: clamp(2rem, 8vw, 2.8rem);
-      font-weight: 500;
+    .map-address { margin-bottom: 20px; }
+    .map-address .addr-name {
+      font-family: 'Cormorant Garamond', serif;
+      font-size: 1.15rem;
+      font-weight: 400;
       color: var(--black);
-      margin-bottom: 8px;
-      line-height: 1.1;
+      margin-bottom: 4px;
     }
+    .map-address .addr-detail {
+      font-size: 0.72rem;
+      color: var(--mid);
+      font-weight: 300;
+      line-height: 1.5;
+    }
+    .map-embed {
+      width: 100%;
+      height: 240px;
+      border: 1px solid var(--light);
+      filter: grayscale(1) contrast(1.05);
+      display: block;
+      transition: filter 0.3s;
+    }
+    .map-embed:hover { filter: grayscale(0.2); }
+    .map-open-btn {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      margin-top: 14px;
+      width: 100%;
+      padding: 14px;
+      background: transparent;
+      border: 1px solid var(--black);
+      font-family: 'Montserrat', sans-serif;
+      font-weight: 300;
+      font-size: 0.53rem;
+      letter-spacing: 0.32em;
+      text-transform: uppercase;
+      color: var(--black);
+      text-decoration: none;
+      transition: all 0.25s;
+    }
+    .map-open-btn:hover { background: var(--black); color: var(--white); }
 
+    /* ── RSVP ── */
+    .rsvp-section {
+      padding: 64px 0 80px;
+    }
+    .rsvp-title {
+      font-family: 'Dancing Script', cursive;
+      font-size: clamp(2.4rem,10vw,3.2rem);
+      font-weight: 700;
+      color: var(--black);
+      line-height: 1.1;
+      margin-bottom: 6px;
+    }
     .rsvp-sub {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
       font-size: 1rem;
       color: var(--mid);
-      margin-bottom: 36px;
-      line-height: 1.5;
+      margin-bottom: 40px;
+      line-height: 1.6;
     }
+    .rsvp-sub strong { color: var(--black); font-style: normal; font-weight: 400; }
 
-    .rsvp-sub em { font-style: normal; color: var(--black); font-weight: 400; }
-
-    /* Form */
     .field { margin-bottom: 24px; }
-
-    .field label {
+    .field > label {
       display: block;
-      font-size: 0.52rem;
-      letter-spacing: 0.35em;
+      font-size: 0.47rem;
+      letter-spacing: 0.38em;
       text-transform: uppercase;
       font-weight: 300;
       color: var(--mid);
       margin-bottom: 10px;
     }
-
     .field input,
     .field textarea {
       width: 100%;
@@ -459,41 +493,25 @@
       color: var(--black);
       outline: none;
       border-radius: 0;
-      transition: border-color 0.25s;
       -webkit-appearance: none;
+      transition: border-color 0.25s;
     }
-
     .field input:focus,
-    .field textarea:focus {
-      border-color: var(--black);
-    }
+    .field textarea:focus { border-color: var(--black); }
+    .field textarea { resize: none; height: 54px; line-height: 1.5; }
+    ::placeholder { color: var(--gray); font-style: italic; }
 
-    .field textarea { resize: none; height: 56px; line-height: 1.5; }
-
-    ::placeholder { color: var(--warm-gray); font-style: italic; }
-
-    /* Buttons choice */
-    .choice-group {
-      display: flex;
-      gap: 10px;
-    }
-
-    .choice-opt { flex: 1; }
-
-    .choice-opt input[type="radio"] {
-      position: absolute;
-      opacity: 0;
-      width: 0; height: 0;
-    }
-
-    .choice-opt label {
+    .choices { display: flex; gap: 10px; }
+    .choice { flex: 1; }
+    .choice input[type="radio"] { position: absolute; opacity: 0; width: 0; height: 0; }
+    .choice label {
       display: flex;
       align-items: center;
       justify-content: center;
-      gap: 6px;
-      padding: 13px 8px;
+      gap: 5px;
+      padding: 14px 8px;
       border: 1px solid var(--light);
-      font-size: 0.6rem;
+      font-size: 0.53rem;
       letter-spacing: 0.2em;
       text-transform: uppercase;
       cursor: pointer;
@@ -501,507 +519,506 @@
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
       color: var(--mid);
-      text-align: center;
     }
-
-    .choice-opt input[type="radio"]:checked + label {
+    .choice input[type="radio"]:checked + label {
       background: var(--black);
       border-color: var(--black);
-      color: var(--off-white);
+      color: #fff;
     }
 
-    .sub-field {
-      overflow: hidden;
+    .collapsible {
       max-height: 0;
-      transition: max-height 0.4s ease, opacity 0.3s ease;
+      overflow: hidden;
       opacity: 0;
+      transition: max-height 0.4s ease, opacity 0.3s ease;
     }
+    .collapsible.open { max-height: 120px; opacity: 1; }
 
-    .sub-field.visible {
-      max-height: 120px;
-      opacity: 1;
-    }
-
-    /* Submit */
     .btn-submit {
       width: 100%;
       padding: 18px;
       background: var(--black);
-      color: var(--off-white);
+      color: #fff;
       border: none;
       font-family: 'Montserrat', sans-serif;
       font-weight: 300;
-      font-size: 0.6rem;
-      letter-spacing: 0.4em;
+      font-size: 0.53rem;
+      letter-spacing: 0.45em;
       text-transform: uppercase;
       cursor: pointer;
-      margin-top: 32px;
-      transition: all 0.3s ease;
+      margin-top: 28px;
       position: relative;
       overflow: hidden;
+      transition: opacity 0.25s;
     }
-
-    .btn-submit::before {
+    .btn-submit::after {
       content: '';
       position: absolute;
       top: 0; left: -100%;
       width: 100%; height: 100%;
-      background: rgba(255,255,255,0.1);
-      transition: left 0.4s ease;
+      background: linear-gradient(90deg, transparent, rgba(212,168,67,0.15), transparent);
+      transition: left 0.5s ease;
     }
-
-    .btn-submit:hover::before { left: 100%; }
-    .btn-submit:hover { opacity: 0.85; }
-    .btn-submit:disabled { opacity: 0.35; cursor: not-allowed; }
+    .btn-submit:hover::after { left: 100%; }
+    .btn-submit:hover { opacity: 0.82; }
+    .btn-submit:disabled { opacity: 0.3; cursor: not-allowed; }
 
     /* Success */
     .success-state {
       display: none;
       text-align: center;
-      padding: 48px 0;
+      padding: 52px 0;
       animation: fadeUp 0.6s ease both;
     }
-
-    .success-state .s-icon {
-      font-size: 2.5rem;
-      margin-bottom: 20px;
-      animation: popIn 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275) both;
+    .success-state .si { font-size: 3.5rem; margin-bottom: 20px; animation: pop 0.5s cubic-bezier(.175,.885,.32,1.275) both; }
+    .success-state h3 {
+      font-family: 'Dancing Script', cursive;
+      font-size: 2.6rem;
+      font-weight: 700;
+      margin-bottom: 8px;
     }
-
-    @keyframes popIn {
+    .success-state p {
+      font-family: 'Cormorant Garamond', serif;
+      font-style: italic;
+      font-size: 1rem;
+      color: var(--mid);
+      line-height: 1.6;
+    }
+    @keyframes pop {
       from { transform: scale(0) rotate(-10deg); opacity: 0; }
       to   { transform: scale(1) rotate(0deg); opacity: 1; }
     }
 
-    .success-state h3 {
-      font-family: 'Dancing Script', cursive;
-      font-size: 2.5rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-    }
-
-    .success-state p {
-      font-family: 'Cormorant Garamond', serif;
-      font-style: italic;
-      font-size: 1.05rem;
-      color: var(--mid);
-      line-height: 1.6;
-    }
-
-    /* ────── FOOTER ────── */
+    /* ── FOOTER ── */
     footer {
       border-top: 1px solid var(--light);
       text-align: center;
-      padding: 28px 24px 48px;
-      position: relative;
-      z-index: 1;
+      padding: 28px 24px 52px;
     }
-
+    footer .ft-name {
+      font-family: 'Dancing Script', cursive;
+      font-size: 1.3rem;
+      font-weight: 600;
+      color: var(--black);
+      margin-bottom: 6px;
+    }
     footer p {
-      font-size: 0.55rem;
-      letter-spacing: 0.3em;
+      font-size: 0.46rem;
+      letter-spacing: 0.28em;
       text-transform: uppercase;
-      color: var(--warm-gray);
+      color: var(--gray);
       font-weight: 200;
     }
 
-    /* ────── SCROLL REVEAL ────── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(30px);
-      transition: opacity 0.7s ease, transform 0.7s ease;
-    }
+    /* ── REVEAL ── */
+    .reveal { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+    .reveal.on { opacity: 1; transform: translateY(0); }
+    .d1 { transition-delay: 0.08s; }
+    .d2 { transition-delay: 0.18s; }
+    .d3 { transition-delay: 0.28s; }
 
-    .reveal.shown {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-
-    /* ────── CURSOR SPARKLE ────── */
-    .sparkle {
+    /* ── TOUCH SPARKLE ── */
+    .sparkle-el {
       position: fixed;
       pointer-events: none;
       z-index: 9999;
-      font-size: 0.8rem;
-      animation: sparkleAnim 0.6s ease forwards;
+      font-size: 1rem;
+      animation: spk 0.8s ease forwards;
     }
-
-    @keyframes sparkleAnim {
-      0%   { transform: translate(-50%,-50%) scale(0) rotate(0deg); opacity: 1; }
-      100% { transform: translate(-50%,-100px) scale(1) rotate(180deg); opacity: 0; }
+    @keyframes spk {
+      0%   { transform: translate(-50%,-50%) scale(0); opacity: 1; }
+      100% { transform: translate(-50%,-100px) scale(1.2); opacity: 0; }
     }
   </style>
 </head>
 <body>
 
-  <!-- Floating particles -->
-  <div id="particles"></div>
+<canvas id="canvas"></canvas>
 
-  <!-- ═══════ HERO ═══════ -->
-  <section class="hero">
-    <div class="balloons-container">
-      <svg class="balloons-svg" viewBox="0 0 340 430" fill="none" xmlns="http://www.w3.org/2000/svg">
-        <!-- defs for gradient/shine -->
-        <defs>
-          <radialGradient id="g3" cx="38%" cy="30%" r="60%">
-            <stop offset="0%" stop-color="#3d3d3d"/>
-            <stop offset="100%" stop-color="#0a0a0a"/>
-          </radialGradient>
-          <radialGradient id="g0" cx="35%" cy="28%" r="60%">
-            <stop offset="0%" stop-color="#3d3d3d"/>
-            <stop offset="100%" stop-color="#0a0a0a"/>
-          </radialGradient>
-        </defs>
+<!-- ══════════ HERO ══════════ -->
+<section class="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-glow-b"></div>
+  <div class="stars-wrap" id="stars"></div>
 
-        <!-- ── BALLOON "3" ── -->
-        <g>
-          <!-- Upper bulge -->
-          <ellipse cx="112" cy="90" rx="64" ry="68" fill="url(#g3)"/>
-          <!-- Lower bulge -->
-          <ellipse cx="118" cy="228" rx="68" ry="74" fill="url(#g3)"/>
-          <!-- Upper hole -->
-          <ellipse cx="88" cy="90" rx="44" ry="50" fill="#f8f6f2"/>
-          <!-- Lower hole -->
-          <ellipse cx="88" cy="228" rx="44" ry="52" fill="#f8f6f2"/>
-          <!-- Center bar cutout -->
-          <rect x="50" y="155" width="78" height="20" fill="#f8f6f2"/>
-          <!-- Shine spots -->
-          <ellipse cx="83" cy="60" rx="22" ry="14" fill="white" opacity="0.08"/>
-          <ellipse cx="72" cy="52" rx="10" ry="7" fill="white" opacity="0.12"/>
-          <ellipse cx="83" cy="198" rx="20" ry="12" fill="white" opacity="0.06"/>
-          <!-- Knot -->
-          <ellipse cx="119" cy="300" rx="7" ry="5" fill="#0a0a0a"/>
-          <!-- String with curl -->
-          <path d="M119 305 Q105 335 118 360 Q131 385 116 415" stroke="#1a1a1a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-        </g>
+  <!-- Floating balloons -->
+  <div class="bln" style="--s:2rem;--d:7s;--dl:0s;--r:-8deg;--r2:5deg;top:7%;left:5%">🎈</div>
+  <div class="bln" style="--s:1.5rem;--d:9s;--dl:1.2s;--r:7deg;--r2:-4deg;top:12%;right:7%">🎈</div>
+  <div class="bln" style="--s:2.2rem;--d:8s;--dl:2.5s;--r:-5deg;--r2:9deg;top:35%;left:3%">🎈</div>
+  <div class="bln" style="--s:1.7rem;--d:10s;--dl:0.6s;--r:11deg;--r2:-7deg;top:24%;right:4%">🎈</div>
+  <div class="bln" style="--s:1.3rem;--d:6.5s;--dl:3.2s;--r:-12deg;--r2:4deg;top:58%;left:2%">🎈</div>
+  <div class="bln" style="--s:1.6rem;--d:11s;--dl:1.8s;--r:8deg;--r2:-10deg;top:62%;right:3%">🎈</div>
+  <div class="bln" style="--s:1.2rem;--d:7.5s;--dl:4s;--r:-4deg;--r2:7deg;top:80%;left:6%">🎈</div>
+  <div class="bln" style="--s:1.8rem;--d:9.5s;--dl:2s;--r:5deg;--r2:-8deg;top:78%;right:6%">🎈</div>
 
-        <!-- ── BALLOON "0" ── -->
-        <g transform="translate(155, 18)">
-          <!-- Outer shape -->
-          <ellipse cx="92" cy="148" rx="72" ry="122" fill="url(#g0)"/>
-          <!-- Inner hole -->
-          <ellipse cx="92" cy="148" rx="42" ry="84" fill="#f8f6f2"/>
-          <!-- Shine -->
-          <ellipse cx="66" cy="82" rx="22" ry="15" fill="white" opacity="0.08"/>
-          <ellipse cx="56" cy="72" rx="10" ry="7" fill="white" opacity="0.12"/>
-          <!-- Knot -->
-          <ellipse cx="92" cy="268" rx="7" ry="5" fill="#0a0a0a"/>
-          <!-- String -->
-          <path d="M92 273 Q78 305 92 332 Q106 357 90 390" stroke="#1a1a1a" stroke-width="1.3" fill="none" stroke-linecap="round"/>
-        </g>
-      </svg>
+  <!-- Content -->
+  <div class="hero-content">
+    <p class="hero-eyebrow" id="hero-eyebrow">você está convidado para</p>
+    <h1 class="hero-name">Larissa</h1>
+    <p class="hero-faz">f a z</p>
+    <div class="hero-30">30</div>
+    <div class="hero-divider">
+      <div class="line"></div>
+      <div class="diamond"></div>
+      <div class="line"></div>
     </div>
-
-    <div class="hero-content">
-      <p class="hero-eyebrow">você está convidado para</p>
-      <h1 class="hero-name">Larissa faz 30</h1>
-      <p class="hero-age">uma noite especial</p>
-      <div class="hero-line"></div>
-      <div class="hero-pills">
-        <div class="hero-pill">
-          <span class="pill-val">25 abr</span>
-          <span class="pill-label">2026</span>
-        </div>
-        <div class="hero-sep"></div>
-        <div class="hero-pill">
-          <span class="pill-val">Sábado</span>
-          <span class="pill-label">20h00</span>
-        </div>
-        <div class="hero-sep"></div>
-        <div class="hero-pill">
-          <span class="pill-val">Ribeirão</span>
-          <span class="pill-label">Preto · SP</span>
-        </div>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <span class="mv">25 abr</span>
+        <span class="ml">2026</span>
       </div>
-    </div>
-
-    <div class="scroll-hint">
-      <span>Deslize</span>
-      <div class="arrow"></div>
-    </div>
-  </section>
-
-  <!-- ═══════ DETAILS ═══════ -->
-  <div class="section-wrap">
-    <div class="details-section reveal">
-      <p class="sec-eyebrow">Sobre o evento</p>
-      <div class="detail-cards">
-        <div class="detail-card reveal reveal-delay-1">
-          <span class="dc-icon">📅</span>
-          <p class="dc-label">Data</p>
-          <p class="dc-val">25 de Abril<span class="dc-sub">Sábado</span></p>
-        </div>
-        <div class="detail-card reveal reveal-delay-2">
-          <span class="dc-icon">🕗</span>
-          <p class="dc-label">Horário</p>
-          <p class="dc-val">20h00<span class="dc-sub">até a madrugada</span></p>
-        </div>
-        <div class="detail-card reveal reveal-delay-1">
-          <span class="dc-icon">📍</span>
-          <p class="dc-label">Local</p>
-          <p class="dc-val">A confirmar<span class="dc-sub">Ribeirão Preto · SP</span></p>
-          <a class="map-link" href="#" target="_blank">ver no mapa ↗</a>
-        </div>
-        <div class="detail-card reveal reveal-delay-2">
-          <span class="dc-icon">🖤</span>
-          <p class="dc-label">Dress code</p>
-          <p class="dc-val">Preto &amp; Branco<span class="dc-sub">obrigatório ✦</span></p>
-        </div>
+      <div class="vsep"></div>
+      <div class="hero-meta-item">
+        <span class="mv">Sábado</span>
+        <span class="ml">20h00</span>
+      </div>
+      <div class="vsep"></div>
+      <div class="hero-meta-item">
+        <span class="mv">Ribeirão</span>
+        <span class="ml">Preto · SP</span>
       </div>
     </div>
   </div>
 
-  <!-- ═══════ COUNTDOWN ═══════ -->
-  <div class="section-wrap">
-    <div class="countdown-section reveal">
-      <p class="sec-eyebrow">Faltam...</p>
-      <p class="countdown-intro">cada dia que passa é<br/>um dia a menos para celebrar</p>
-      <div class="countdown-grid">
-        <div class="cd-unit">
-          <span class="cd-num" id="cd-days">--</span>
-          <span class="cd-label">dias</span>
-        </div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit">
-          <span class="cd-num" id="cd-hours">--</span>
-          <span class="cd-label">horas</span>
-        </div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit">
-          <span class="cd-num" id="cd-mins">--</span>
-          <span class="cd-label">min</span>
-        </div>
-        <span class="cd-sep">:</span>
-        <div class="cd-unit">
-          <span class="cd-num" id="cd-secs">--</span>
-          <span class="cd-label">seg</span>
-        </div>
+  <div class="scroll-cue">
+    <span>Deslize</span>
+    <div class="scroll-cue-line"></div>
+  </div>
+</section>
+
+<!-- ══════════ DETAILS ══════════ -->
+<div class="section-wrap">
+  <div class="details-section">
+    <div class="sec-tag reveal">
+      <div class="tag-line"></div>
+      <span class="tag-text">Sobre o evento</span>
+      <div class="tag-line"></div>
+    </div>
+    <div class="detail-grid">
+      <div class="dcard reveal d1">
+        <span class="d-icon">📅</span>
+        <p class="d-label">Data</p>
+        <p class="d-val">25 de Abril<span class="d-sub">Sábado, 2026</span></p>
+      </div>
+      <div class="dcard reveal d2">
+        <span class="d-icon">🕗</span>
+        <p class="d-label">Horário</p>
+        <p class="d-val">20h00<span class="d-sub">até a madrugada</span></p>
+      </div>
+      <div class="dcard reveal d1">
+        <span class="d-icon">📍</span>
+        <p class="d-label">Local</p>
+        <p class="d-val">Al. Sen. Carlos Geireasat<span class="d-sub">nº 60 · Ribeirão Preto</span></p>
+      </div>
+      <div class="dcard reveal d2">
+        <span class="d-icon">🖤</span>
+        <p class="d-label">Dress code</p>
+        <p class="d-val">Preto &amp; Branco<span class="d-sub">obrigatório ✦</span></p>
       </div>
     </div>
   </div>
+</div>
 
-  <!-- ═══════ RSVP ═══════ -->
-  <div class="section-wrap">
-    <div class="rsvp-section reveal">
-      <p class="sec-eyebrow">Confirmar presença</p>
-      <h2 class="rsvp-heading">Você vai?</h2>
-      <p class="rsvp-sub">Confirme até <em>15 de abril</em> para garantirmos seu lugar nessa noite.</p>
+<!-- ══════════ COUNTDOWN ══════════ -->
+<div class="section-wrap">
+  <div class="countdown-section reveal">
+    <div class="sec-tag">
+      <div class="tag-line"></div>
+      <span class="tag-text">Contagem regressiva</span>
+      <div class="tag-line"></div>
+    </div>
+    <p class="cd-quote">cada momento que passa<br/>é um dia a menos para celebrar</p>
+    <div class="cd-row">
+      <div class="cd-block">
+        <span class="cd-num" id="cd-d">--</span>
+        <span class="cd-lbl">dias</span>
+      </div>
+      <span class="cd-colon">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-h">--</span>
+        <span class="cd-lbl">horas</span>
+      </div>
+      <span class="cd-colon">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-m">--</span>
+        <span class="cd-lbl">min</span>
+      </div>
+      <span class="cd-colon">:</span>
+      <div class="cd-block">
+        <span class="cd-num" id="cd-s">--</span>
+        <span class="cd-lbl">seg</span>
+      </div>
+    </div>
+  </div>
+</div>
 
-      <form id="rsvp-form" action="https://formsubmit.co/dev@rafaelantun.es" method="POST" onsubmit="handleSubmit(event)" novalidate>
-        <input type="hidden" name="_subject" value="RSVP Aniversário Larissa 30 🎈"/>
-        <input type="hidden" name="_captcha" value="false"/>
-        <input type="hidden" name="_template" value="table"/>
-        <input type="hidden" name="convidado" id="hidden-guest"/>
-        <input type="hidden" name="resposta_url" id="hidden-url"/>
-        <div class="field">
-          <label>Nome completo</label>
-          <input type="text" id="f-nome" placeholder="Como gostaria de ser chamado(a)" required/>
-        </div>
-        <div class="field">
-          <label>WhatsApp</label>
-          <input type="tel" id="f-tel" placeholder="(99) 99999-9999" required/>
-        </div>
-        <div class="field">
-          <label>Você vai comparecer?</label>
-          <div class="choice-group">
-            <div class="choice-opt">
-              <input type="radio" name="presence" id="p-sim" value="sim" required/>
-              <label for="p-sim">✓ &nbsp;Sim, estarei lá</label>
-            </div>
-            <div class="choice-opt">
-              <input type="radio" name="presence" id="p-nao" value="nao"/>
-              <label for="p-nao">✗ &nbsp;Não poderei ir</label>
-            </div>
+<!-- ══════════ MAP ══════════ -->
+<div class="section-wrap">
+  <div class="map-section reveal">
+    <div class="sec-tag">
+      <div class="tag-line"></div>
+      <span class="tag-text">Localização</span>
+      <div class="tag-line"></div>
+    </div>
+    <div class="map-address">
+      <p class="addr-name">Alameda Senador Carlos Geireasat, 60</p>
+      <p class="addr-detail">Ribeirão Preto · SP · CEP 14027-508</p>
+    </div>
+    <iframe
+      class="map-embed"
+      loading="lazy"
+      allowfullscreen
+      referrerpolicy="no-referrer-when-downgrade"
+      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3ao4&q=Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP"
+    ></iframe>
+    <a class="map-open-btn"
+       href="https://www.google.com/maps/search/Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP"
+       target="_blank">
+      ↗ &nbsp; Abrir no Google Maps
+    </a>
+  </div>
+</div>
+
+<!-- ══════════ RSVP ══════════ -->
+<div class="section-wrap">
+  <div class="rsvp-section reveal">
+    <div class="sec-tag">
+      <div class="tag-line"></div>
+      <span class="tag-text">Confirmar presença</span>
+      <div class="tag-line"></div>
+    </div>
+    <h2 class="rsvp-title" id="rsvp-title">Você vai?</h2>
+    <p class="rsvp-sub">Confirme até <strong>15 de abril</strong> para garantir seu lugar nessa noite especial.</p>
+
+    <form id="rsvp-form" action="https://formsubmit.co/ajax/dev@rafaelantun.es" method="POST" onsubmit="doSubmit(event)" novalidate>
+      <input type="hidden" name="_subject" value="RSVP · Larissa 30 🎈"/>
+      <input type="hidden" name="_captcha" value="false"/>
+      <input type="hidden" name="_template" value="table"/>
+      <input type="hidden" name="convidado_url" id="hid-guest"/>
+      <input type="hidden" name="pagina_url" id="hid-url"/>
+
+      <div class="field">
+        <label>Nome completo</label>
+        <input type="text" name="nome" id="f-nome" placeholder="Como gostaria de ser chamado(a)" required/>
+      </div>
+      <div class="field">
+        <label>WhatsApp</label>
+        <input type="tel" name="whatsapp" id="f-tel" placeholder="(99) 99999-9999" required/>
+      </div>
+      <div class="field">
+        <label>Você vai comparecer?</label>
+        <div class="choices">
+          <div class="choice">
+            <input type="radio" name="presenca" id="s-sim" value="✓ Sim, estarei lá" required/>
+            <label for="s-sim">✓ &nbsp;Sim, estarei lá</label>
+          </div>
+          <div class="choice">
+            <input type="radio" name="presenca" id="s-nao" value="✗ Não poderei ir"/>
+            <label for="s-nao">✗ &nbsp;Não poderei ir</label>
           </div>
         </div>
-
-        <div class="field sub-field" id="acomp-wrap">
-          <label>Vai com acompanhante?</label>
-          <div class="choice-group">
-            <div class="choice-opt">
-              <input type="radio" name="acomp" id="a-sim" value="sim"/>
-              <label for="a-sim">Sim</label>
-            </div>
-            <div class="choice-opt">
-              <input type="radio" name="acomp" id="a-nao" value="nao"/>
-              <label for="a-nao">Não</label>
-            </div>
+      </div>
+      <div class="field collapsible" id="acomp-field">
+        <label>Vai com acompanhante?</label>
+        <div class="choices">
+          <div class="choice">
+            <input type="radio" name="acompanhante" id="a-s" value="Sim"/>
+            <label for="a-s">Sim</label>
+          </div>
+          <div class="choice">
+            <input type="radio" name="acompanhante" id="a-n" value="Não"/>
+            <label for="a-n">Não</label>
           </div>
         </div>
-
-        <div class="field">
-          <label>Mensagem para a Larissa <span style="opacity:.4;font-size:.8em;">(opcional)</span></label>
-          <textarea id="f-msg" placeholder="Escreva algo carinhoso..."></textarea>
-        </div>
-
-        <button type="submit" class="btn-submit" id="submit-btn">
-          Confirmar minha presença
-        </button>
-      </form>
-
-      <div class="success-state" id="success-state">
-        <div class="s-icon">🎈</div>
-        <h3>Até lá!</h3>
-        <p>Sua presença foi registrada.<br/>Mal podemos esperar para celebrar juntos.</p>
       </div>
+      <div class="field">
+        <label>Mensagem para a Larissa <span style="opacity:.33;font-size:.8em;">(opcional)</span></label>
+        <textarea name="mensagem" id="f-msg" placeholder="Escreva algo carinhoso..."></textarea>
+      </div>
+      <button type="submit" class="btn-submit" id="btn-sub">Confirmar minha presença</button>
+    </form>
+
+    <div class="success-state" id="suc">
+      <div class="si">🎈</div>
+      <h3 id="suc-title">Até lá!</h3>
+      <p>Sua presença foi registrada.<br/>Mal podemos esperar para celebrar juntos.</p>
     </div>
   </div>
+</div>
 
-  <footer>
-    <p>Larissa · 30 anos · 25 de abril de 2026 · Ribeirão Preto</p>
-  </footer>
+<!-- ══════════ FOOTER ══════════ -->
+<footer>
+  <p class="ft-name">Larissa ✦ 30 anos</p>
+  <p>25 de abril de 2026 · Ribeirão Preto · SP</p>
+</footer>
 
-  <script>
+<script>
+// ── Stars
+(function() {
+  const wrap = document.getElementById('stars');
+  for (let i = 0; i < 55; i++) {
+    const s = document.createElement('div');
+    s.className = 'star';
+    const sz = Math.random() * 2.5 + 0.6;
+    s.style.cssText = `
+      width:${sz}px;height:${sz}px;
+      top:${Math.random()*100}%;left:${Math.random()*100}%;
+      --dur:${(Math.random()*3+2).toFixed(1)}s;
+      --delay:${(Math.random()*6).toFixed(1)}s;
+      --max-op:${(Math.random()*0.45+0.1).toFixed(2)};
+    `;
+    wrap.appendChild(s);
+  }
+})();
 
-    // ── Personalization from URL
-    const urlParams = new URLSearchParams(window.location.search);
-    const guestName = urlParams.get('convidado') || urlParams.get('nome') || urlParams.get('guest') || '';
-    const guestFirst = guestName ? guestName.split(' ')[0] : '';
+// ── Personalization
+const params = new URLSearchParams(window.location.search);
+const guest = params.get('convidado') || params.get('nome') || params.get('guest') || '';
+const firstName = guest ? guest.trim().split(' ')[0] : '';
+if (firstName) {
+  const eyebrow = document.getElementById('hero-eyebrow');
+  if (eyebrow) eyebrow.textContent = firstName + ', você está convidado(a) para';
+  const rt = document.getElementById('rsvp-title');
+  if (rt) rt.textContent = firstName + ', você vai?';
+  const ni = document.getElementById('f-nome');
+  if (ni) ni.value = guest;
+  document.title = firstName + ' · Larissa faz 30 ✦';
+}
 
-    function applyPersonalization() {
-      if (!guestName) return;
+// ── Countdown
+function tick() {
+  const target = new Date('2026-04-25T20:00:00-03:00');
+  const diff = target - new Date();
+  if (diff <= 0) return;
+  const pad = n => String(Math.floor(n)).padStart(2,'0');
+  document.getElementById('cd-d').textContent = pad(diff/86400000);
+  document.getElementById('cd-h').textContent = pad((diff%86400000)/3600000);
+  document.getElementById('cd-m').textContent = pad((diff%3600000)/60000);
+  document.getElementById('cd-s').textContent = pad((diff%60000)/1000);
+}
+tick(); setInterval(tick, 1000);
 
-      // Update hero eyebrow
-      const eyebrow = document.querySelector('.hero-eyebrow');
-      if (eyebrow) eyebrow.textContent = guestFirst + ', você está convidado(a) para';
+// ── Companion toggle
+document.querySelectorAll('input[name="presenca"]').forEach(r => {
+  r.addEventListener('change', () => {
+    document.getElementById('acomp-field').classList.toggle('open', r.value.includes('Sim'));
+  });
+});
 
-      // Update RSVP heading
-      const heading = document.querySelector('.rsvp-heading');
-      if (heading) heading.textContent = guestFirst + ', você vai?';
+// ── Submit
+function doSubmit(e) {
+  e.preventDefault();
+  const btn = document.getElementById('btn-sub');
+  document.getElementById('hid-guest').value = guest || 'Não identificado';
+  document.getElementById('hid-url').value = window.location.href;
+  btn.disabled = true;
+  btn.textContent = 'Enviando...';
+  fetch('https://formsubmit.co/ajax/dev@rafaelantun.es', {
+    method: 'POST',
+    body: new FormData(document.getElementById('rsvp-form')),
+    headers: { Accept: 'application/json' }
+  }).catch(()=>{}).finally(()=>{
+    document.getElementById('rsvp-form').style.display = 'none';
+    const s = document.getElementById('suc');
+    s.style.display = 'block';
+    if (firstName) document.getElementById('suc-title').textContent = 'Até lá, ' + firstName + '!';
+    launchConfetti();
+  });
+}
 
-      // Pre-fill name field
-      const nameInput = document.getElementById('f-nome');
-      if (nameInput) {
-        nameInput.value = guestName;
-        nameInput.style.color = 'var(--black)';
-      }
+// ── Canvas particles
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W, H, parts = [];
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize();
+window.addEventListener('resize', resize);
 
-      // Update page title
-      document.title = guestFirst + ' · Larissa faz 30 ✦';
-    }
+function Particle() {
+  this.reset = function() {
+    this.x = Math.random() * W;
+    this.y = H + 8;
+    this.r = Math.random() * 2 + 0.6;
+    this.speed = Math.random() * 0.3 + 0.1;
+    this.vx = (Math.random()-0.5) * 0.3;
+    this.op = Math.random() * 0.1 + 0.03;
+  };
+  this.reset();
+  this.y = Math.random() * H;
+}
+for (let i = 0; i < 26; i++) parts.push(new Particle());
 
-    document.addEventListener('DOMContentLoaded', applyPersonalization);
+function drawP() {
+  ctx.clearRect(0,0,W,H);
+  parts.forEach(p => {
+    ctx.fillStyle = `rgba(8,8,8,${p.op})`;
+    ctx.beginPath();
+    ctx.arc(p.x,p.y,p.r,0,Math.PI*2);
+    ctx.fill();
+    p.y -= p.speed; p.x += p.vx;
+    if (p.y < -8) p.reset();
+  });
+  requestAnimationFrame(drawP);
+}
+drawP();
 
-    // ── Particles
-    (function() {
-      const container = document.getElementById('particles');
-      const chars = ['✦','·','∘','⋆','•'];
-      for (let i = 0; i < 18; i++) {
-        const el = document.createElement('div');
-        el.className = 'particle';
-        const size = Math.random() * 4 + 2;
-        const left = Math.random() * 100;
-        const dur = Math.random() * 12 + 10;
-        const delay = Math.random() * 8;
-        const dx = (Math.random() - 0.5) * 80;
-        el.style.cssText = `
-          left:${left}%;
-          width:${size}px; height:${size}px;
-          background: rgba(0,0,0,${Math.random() * 0.12 + 0.04});
-          animation-duration:${dur}s;
-          animation-delay:${delay}s;
-          --dx:${dx}px;
-        `;
-        container.appendChild(el);
-      }
-    })();
-
-    // ── Countdown
-    function updateCountdown() {
-      const target = new Date('2026-04-25T20:00:00-03:00');
-      const now = new Date();
-      const diff = target - now;
-      if (diff <= 0) {
-        document.getElementById('cd-days').textContent = '00';
-        document.getElementById('cd-hours').textContent = '00';
-        document.getElementById('cd-mins').textContent = '00';
-        document.getElementById('cd-secs').textContent = '00';
-        return;
-      }
-      const d = Math.floor(diff / 86400000);
-      const h = Math.floor((diff % 86400000) / 3600000);
-      const m = Math.floor((diff % 3600000) / 60000);
-      const s = Math.floor((diff % 60000) / 1000);
-      document.getElementById('cd-days').textContent = String(d).padStart(2,'0');
-      document.getElementById('cd-hours').textContent = String(h).padStart(2,'0');
-      document.getElementById('cd-mins').textContent = String(m).padStart(2,'0');
-      document.getElementById('cd-secs').textContent = String(s).padStart(2,'0');
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 1000);
-
-    // ── Presence toggle
-    document.querySelectorAll('input[name="presence"]').forEach(r => {
-      r.addEventListener('change', () => {
-        const wrap = document.getElementById('acomp-wrap');
-        if (r.value === 'sim') wrap.classList.add('visible');
-        else wrap.classList.remove('visible');
-      });
+// ── Confetti burst
+function launchConfetti() {
+  const b = [];
+  const cols = ['#d4a843','#f0cc70','#a07828','#ffffff','#080808','#f5d878'];
+  for (let i = 0; i < 80; i++) {
+    b.push({
+      x:W/2, y:H/2,
+      vx:(Math.random()-0.5)*10,
+      vy:Math.random()*-14-2,
+      col:cols[Math.floor(Math.random()*cols.length)],
+      sz:Math.random()*7+3,
+      rot:Math.random()*360,
+      rv:(Math.random()-0.5)*7,
+      life:1
     });
+  }
+  function anim() {
+    const alive = b.filter(p => p.life > 0);
+    ctx.clearRect(0,0,W,H);
+    parts.forEach(p => {
+      ctx.fillStyle = `rgba(8,8,8,${p.op})`;
+      ctx.beginPath(); ctx.arc(p.x,p.y,p.r,0,Math.PI*2); ctx.fill();
+    });
+    alive.forEach(p => {
+      p.x+=p.vx; p.y+=p.vy; p.vy+=0.35;
+      p.rot+=p.rv; p.life-=0.012;
+      ctx.save();
+      ctx.translate(p.x,p.y);
+      ctx.rotate(p.rot*Math.PI/180);
+      ctx.fillStyle=p.col;
+      ctx.globalAlpha=p.life;
+      ctx.fillRect(-p.sz/2,-p.sz/2,p.sz,p.sz*0.5);
+      ctx.restore();
+    });
+    if (alive.length) requestAnimationFrame(anim);
+  }
+  anim();
+}
 
-    // ── RSVP submit
-    function handleSubmit(e) {
-      const btn = document.getElementById('submit-btn');
+// ── Scroll reveal
+const ro = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) { e.target.classList.add('on'); ro.unobserve(e.target); }
+  });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach(el => ro.observe(el));
 
-      // Populate hidden fields
-      const hiddenGuest = document.getElementById('hidden-guest');
-      const hiddenUrl = document.getElementById('hidden-url');
-      if (hiddenGuest) hiddenGuest.value = guestName || 'Não identificado';
-      if (hiddenUrl) hiddenUrl.value = window.location.href;
-
-      btn.disabled = true;
-      btn.textContent = 'Enviando...';
-
-      // If guestName exists, let form submit naturally (FormSubmit)
-      // but intercept to show success state instead of redirect
-      e.preventDefault();
-
-      const form = document.getElementById('rsvp-form');
-      const formData = new FormData(form);
-
-      fetch('https://formsubmit.co/ajax/dev@rafaelantun.es', {
-        method: 'POST',
-        body: formData,
-        headers: { 'Accept': 'application/json' }
-      }).catch(() => {}).finally(() => {
-        form.style.display = 'none';
-        const s = document.getElementById('success-state');
-        s.style.display = 'block';
-
-        // Personalize success message
-        if (guestFirst) {
-          const h3 = s.querySelector('h3');
-          if (h3) h3.textContent = 'Até lá, ' + guestFirst + '!';
-        }
-      });
-    }
-
-    // ── Scroll reveal
-    const observer = new IntersectionObserver(entries => {
-      entries.forEach(e => {
-        if (e.isIntersecting) {
-          e.target.classList.add('shown');
-          observer.unobserve(e.target);
-        }
-      });
-    }, { threshold: 0.1 });
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    // ── Touch sparkle (mobile)
-    document.addEventListener('touchstart', e => {
-      const t = e.touches[0];
-      const spark = document.createElement('div');
-      spark.className = 'sparkle';
-      spark.textContent = ['✦','✧','·','⋆'][Math.floor(Math.random()*4)];
-      spark.style.left = t.clientX + 'px';
-      spark.style.top = t.clientY + 'px';
-      document.body.appendChild(spark);
-      setTimeout(() => spark.remove(), 600);
-    }, { passive: true });
-  </script>
+// ── Touch sparkle
+document.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  const el = document.createElement('div');
+  el.className = 'sparkle-el';
+  el.textContent = ['✦','✧','⋆','🎈','✦'][Math.floor(Math.random()*5)];
+  el.style.cssText = `left:${t.clientX}px;top:${t.clientY}px;color:${Math.random()>.5?'#d4a843':'#080808'};`;
+  document.body.appendChild(el);
+  setTimeout(()=>el.remove(), 800);
+}, {passive:true});
+</script>
 </body>
 </html>
