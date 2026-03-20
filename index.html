@@ -50,6 +50,13 @@
       margin-bottom: 16px;
       animation: fadeUp .8s ease .2s both;
     }
+    .hero-eyebrow.personalized {
+      font-size: 0.78rem;
+      color: var(--black);
+      font-weight: 400;
+      letter-spacing: 0.2em;
+      text-transform: none;
+    }
 
     .hero-name {
       font-family: 'Cormorant Garamond', serif;
@@ -365,6 +372,25 @@
     .d1 { transition-delay: .06s; }
     .d2 { transition-delay: .14s; }
 
+    /* ── BALLOONS BG ── */
+    .balloons-bg {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -58%);
+      width: min(92vw, 420px);
+      pointer-events: none;
+      z-index: 1;
+      animation: blnFloat 7s ease-in-out infinite;
+    }
+    @keyframes blnFloat {
+      0%,100% { transform: translate(-50%, -58%) translateY(0); }
+      50%      { transform: translate(-50%, -58%) translateY(-12px); }
+    }
+
+    /* hero content above balloons */
+    .hero > *:not(.balloons-bg):not(.scroll-cue) { position: relative; z-index: 2; }
+
     /* ── CANVAS ── */
     #canvas {
       position: fixed;
@@ -393,6 +419,31 @@
 
 <!-- ══ HERO ══ -->
 <section class="hero">
+
+  <!-- SVG balloons behind the 30 -->
+  <svg class="balloons-bg" viewBox="0 0 360 420" fill="none" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <!-- left balloon -->
+    <ellipse cx="80" cy="155" rx="52" ry="70" fill="rgba(10,10,10,0.07)" />
+    <ellipse cx="80" cy="155" rx="52" ry="70" stroke="rgba(10,10,10,0.13)" stroke-width="1"/>
+    <ellipse cx="62" cy="126" rx="14" ry="9" fill="rgba(255,255,255,0.18)"/>
+    <path d="M80 225 Q74 252 80 272 Q86 290 78 310" stroke="rgba(10,10,10,0.15)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <circle cx="80" cy="228" r="4" fill="rgba(10,10,10,0.09)"/>
+
+    <!-- right balloon -->
+    <ellipse cx="282" cy="140" rx="58" ry="78" fill="rgba(10,10,10,0.065)" />
+    <ellipse cx="282" cy="140" rx="58" ry="78" stroke="rgba(10,10,10,0.12)" stroke-width="1"/>
+    <ellipse cx="262" cy="108" rx="16" ry="10" fill="rgba(255,255,255,0.16)"/>
+    <path d="M282 218 Q276 246 282 266 Q288 286 280 308" stroke="rgba(10,10,10,0.13)" stroke-width="1.2" fill="none" stroke-linecap="round"/>
+    <circle cx="282" cy="221" r="4.5" fill="rgba(10,10,10,0.08)"/>
+
+    <!-- small center-top balloon -->
+    <ellipse cx="180" cy="72" rx="34" ry="46" fill="rgba(10,10,10,0.05)" />
+    <ellipse cx="180" cy="72" rx="34" ry="46" stroke="rgba(10,10,10,0.10)" stroke-width="1"/>
+    <ellipse cx="168" cy="52" rx="10" ry="6" fill="rgba(255,255,255,0.14)"/>
+    <path d="M180 118 Q176 136 180 150 Q184 163 178 176" stroke="rgba(10,10,10,0.12)" stroke-width="1" fill="none" stroke-linecap="round"/>
+    <circle cx="180" cy="120" r="3" fill="rgba(10,10,10,0.07)"/>
+  </svg>
+
   <p class="hero-eyebrow" id="hero-eyebrow">você está convidado para</p>
   <h1 class="hero-name">Larissa</h1>
   <span class="hero-number">30</span>
@@ -536,7 +587,8 @@ const params=new URLSearchParams(window.location.search);
 const guest=params.get('convidado')||params.get('nome')||params.get('guest')||'';
 const firstName=guest?guest.trim().split(' ')[0]:'';
 if(firstName){
-  const eb=document.getElementById('hero-eyebrow'); if(eb) eb.textContent=firstName+', você está convidado(a) para';
+  const eb=document.getElementById('hero-eyebrow');
+  if(eb){ eb.textContent=firstName+', você está convidado(a) para'; eb.classList.add('personalized'); }
   const rt=document.getElementById('rsvp-title');  if(rt) rt.textContent=firstName+', você vai?';
   const ni=document.getElementById('f-nome');      if(ni) ni.value=guest;
   document.title=firstName+' · Larissa 30';
