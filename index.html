@@ -42,7 +42,7 @@
     }
 
     .hero-eyebrow {
-      font-size: 0.5rem;
+      font-size: 0.62rem;
       letter-spacing: 0.55em;
       text-transform: uppercase;
       font-weight: 300;
@@ -98,13 +98,13 @@
     .hero-meta .m-val {
       display: block;
       font-family: 'Cormorant Garamond', serif;
-      font-size: clamp(.9rem, 3.5vw, 1.05rem);
+      font-size: clamp(1rem, 4vw, 1.25rem);
       font-weight: 400;
       color: var(--black);
     }
     .hero-meta .m-lbl {
       display: block;
-      font-size: 0.4rem;
+      font-size: 0.52rem;
       letter-spacing: 0.28em;
       text-transform: uppercase;
       font-weight: 300;
@@ -155,7 +155,7 @@
     }
 
     .sec-label {
-      font-size: 0.4rem;
+      font-size: 0.55rem;
       letter-spacing: 0.55em;
       text-transform: uppercase;
       font-weight: 300;
@@ -179,7 +179,7 @@
     }
     .d-row:last-child { border-bottom: none; }
     .d-row .d-label {
-      font-size: 0.42rem;
+      font-size: 0.55rem;
       letter-spacing: 0.34em;
       text-transform: uppercase;
       font-weight: 300;
@@ -188,14 +188,14 @@
     }
     .d-row .d-val {
       font-family: 'Cormorant Garamond', serif;
-      font-size: 1rem;
+      font-size: 1.15rem;
       font-weight: 400;
       color: var(--black);
       text-align: right;
     }
     .d-row .d-val small {
       display: block;
-      font-size: 0.68rem;
+      font-size: 0.8rem;
       color: var(--mid);
       font-style: italic;
     }
@@ -217,7 +217,7 @@
       line-height: 1;
     }
     .cd-lbl {
-      font-size: 0.36rem;
+      font-size: 0.5rem;
       letter-spacing: 0.34em;
       text-transform: uppercase;
       font-weight: 300;
@@ -229,7 +229,7 @@
     .cd-quote {
       font-family: 'Cormorant Garamond', serif;
       font-style: italic;
-      font-size: clamp(.95rem, 3.5vw, 1.1rem);
+      font-size: clamp(1.05rem, 4vw, 1.25rem);
       font-weight: 300;
       color: var(--mid);
       margin-top: 36px;
@@ -238,15 +238,15 @@
 
     /* ── MAP ── */
     .map-section { padding: 64px 0; border-bottom: 1px solid var(--line); }
-    .addr-name { font-family: 'Cormorant Garamond', serif; font-size: 1rem; font-weight: 400; color: var(--black); margin-bottom: 3px; }
-    .addr-detail { font-size: .68rem; color: var(--mid); line-height: 1.5; margin-bottom: 16px; }
+    .addr-name { font-family: 'Cormorant Garamond', serif; font-size: 1.15rem; font-weight: 400; color: var(--black); margin-bottom: 3px; }
+    .addr-detail { font-size: .8rem; color: var(--mid); line-height: 1.5; margin-bottom: 16px; }
     .map-embed { width: 100%; height: 220px; border: 1px solid var(--line); filter: grayscale(1) contrast(1.1); display: block; transition: filter .3s; }
     .map-embed:hover { filter: grayscale(.4); }
     .map-open-btn {
       display: flex; align-items: center; justify-content: center; gap: 8px;
       margin-top: 12px; width: 100%; padding: 13px;
       background: transparent; border: 1px solid var(--line);
-      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .42rem;
+      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .55rem;
       letter-spacing: .42em; text-transform: uppercase; color: var(--mid);
       text-decoration: none; transition: all .2s;
     }
@@ -265,7 +265,7 @@
       margin-bottom: 4px;
     }
     .rsvp-sub {
-      font-size: .72rem;
+      font-size: .85rem;
       color: var(--mid);
       font-weight: 300;
       margin-bottom: 40px;
@@ -276,7 +276,7 @@
     .field { margin-bottom: 26px; }
     .field > label {
       display: block;
-      font-size: .4rem;
+      font-size: .54rem;
       letter-spacing: .44em;
       text-transform: uppercase;
       font-weight: 300;
@@ -300,7 +300,7 @@
     .choice label {
       display: flex; align-items: center; justify-content: center; gap: 5px;
       padding: 12px 8px; border: 1px solid var(--line);
-      font-size: .42rem; letter-spacing: .2em; text-transform: uppercase;
+      font-size: .56rem; letter-spacing: .2em; text-transform: uppercase;
       cursor: pointer; transition: all .2s;
       font-family: 'Inter', sans-serif; font-weight: 300; color: var(--mid);
     }
@@ -315,7 +315,7 @@
       width: 100%; padding: 17px;
       background: var(--black); color: var(--white);
       border: none;
-      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .44rem;
+      font-family: 'Inter', sans-serif; font-weight: 300; font-size: .58rem;
       letter-spacing: .55em; text-transform: uppercase;
       cursor: pointer; margin-top: 32px;
       transition: opacity .2s;
@@ -364,9 +364,32 @@
     .reveal.on { opacity: 1; transform: translateY(0); }
     .d1 { transition-delay: .06s; }
     .d2 { transition-delay: .14s; }
+
+    /* ── CANVAS ── */
+    #canvas {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 0;
+    }
+
+    /* touch sparkle */
+    .sparkle-el {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      color: var(--mid);
+      animation: spk .7s ease forwards;
+    }
+    @keyframes spk {
+      0%   { opacity: .8; transform: translate(-50%,-50%) scale(0); }
+      100% { opacity: 0;  transform: translate(-50%,-70px) scale(1); }
+    }
   </style>
 </head>
 <body>
+
+<canvas id="canvas"></canvas>
 
 <!-- ══ HERO ══ -->
 <section class="hero">
@@ -555,6 +578,63 @@ const ro=new IntersectionObserver(es=>{
   es.forEach(e=>{ if(e.isIntersecting){ e.target.classList.add('on'); ro.unobserve(e.target); } });
 },{threshold:0.08});
 document.querySelectorAll('.reveal').forEach(el=>ro.observe(el));
+
+// ── Canvas particles — subtle floating dots
+const canvas = document.getElementById('canvas');
+const ctx = canvas.getContext('2d');
+let W, H;
+function resize() { W = canvas.width = window.innerWidth; H = canvas.height = window.innerHeight; }
+resize(); window.addEventListener('resize', resize);
+
+function Dot() {
+  this.reset = function() {
+    this.x = Math.random() * W;
+    this.y = Math.random() * H;
+    this.r = Math.random() * 1.5 + 0.4;
+    this.vx = (Math.random() - 0.5) * 0.22;
+    this.vy = (Math.random() - 0.5) * 0.22;
+    this.op = Math.random() * 0.12 + 0.03;
+    this.life = Math.random() * 300 + 150;
+    this.age  = 0;
+  };
+  this.reset();
+  this.age = Math.floor(Math.random() * this.life);
+}
+const dots = [];
+for (let i = 0; i < 55; i++) dots.push(new Dot());
+
+function drawCanvas() {
+  ctx.clearRect(0, 0, W, H);
+  dots.forEach(d => {
+    const fade = Math.sin((d.age / d.life) * Math.PI); // fade in/out over lifetime
+    ctx.globalAlpha = d.op * fade;
+    ctx.fillStyle = '#0a0a0a';
+    ctx.beginPath();
+    ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+    ctx.fill();
+    d.x += d.vx; d.y += d.vy; d.age++;
+    if (d.age >= d.life) d.reset();
+  });
+  ctx.globalAlpha = 1;
+  requestAnimationFrame(drawCanvas);
+}
+drawCanvas();
+
+// ── Touch / click sparkle
+function spawnSparkle(x, y) {
+  const chars = ['·', '·', '×', '+', '·'];
+  const el = document.createElement('div');
+  el.className = 'sparkle-el';
+  el.textContent = chars[Math.floor(Math.random() * chars.length)];
+  el.style.cssText = `left:${x}px;top:${y}px;font-size:${Math.random()*8+8}px;`;
+  document.body.appendChild(el);
+  setTimeout(() => el.remove(), 700);
+}
+document.addEventListener('click', e => spawnSparkle(e.clientX, e.clientY));
+document.addEventListener('touchstart', e => {
+  const t = e.touches[0];
+  spawnSparkle(t.clientX, t.clientY);
+}, { passive: true });
 </script>
 </body>
 </html>
