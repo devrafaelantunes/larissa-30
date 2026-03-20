@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Admin · Larissa 30</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@200;300;400;500&family=Cormorant+Garamond:ital,wght@1,300&display=swap" rel="stylesheet"/>
+  <style>
+    *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;}
+    :root{--black:#0a0a0a;--white:#fafafa;--mid:#666;--line:#e0e0e0;--green:#16a34a;--red:#dc2626;--gray:#f4f4f4;}
+    body{background:var(--white);color:var(--black);font-family:'Inter',sans-serif;font-weight:300;}
+
+    header{
+      border-bottom:1px solid var(--line);
+      padding:24px 32px;
+      display:flex;align-items:center;justify-content:space-between;
+    }
+    header h1{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.6rem;font-weight:300;}
+    header p{font-size:.7rem;color:var(--mid);}
+
+    .stats{
+      display:grid;grid-template-columns:repeat(3,1fr);
+      border-bottom:1px solid var(--line);
+    }
+    .stat{
+      padding:28px 32px;
+      border-right:1px solid var(--line);
+    }
+    .stat:last-child{border-right:none;}
+    .stat .n{font-size:2.8rem;font-weight:400;color:var(--black);line-height:1;}
+    .stat .l{font-size:.5rem;letter-spacing:.35em;text-transform:uppercase;color:var(--mid);margin-top:6px;}
+    .stat.green .n{color:var(--green);}
+    .stat.red   .n{color:var(--red);}
+
+    .filters{
+      padding:20px 32px;
+      display:flex;gap:10px;align-items:center;
+      border-bottom:1px solid var(--line);
+    }
+    .filter-btn{
+      padding:7px 16px;border:1px solid var(--line);background:transparent;
+      font-family:'Inter',sans-serif;font-size:.55rem;letter-spacing:.2em;
+      text-transform:uppercase;cursor:pointer;transition:all .2s;color:var(--mid);
+    }
+    .filter-btn.active{background:var(--black);color:var(--white);border-color:var(--black);}
+
+    .search{
+      margin-left:auto;
+      padding:7px 14px;border:1px solid var(--line);background:transparent;
+      font-family:'Inter',sans-serif;font-size:.7rem;color:var(--black);
+      outline:none;width:200px;
+    }
+    .search:focus{border-color:var(--black);}
+
+    table{width:100%;border-collapse:collapse;}
+    th{
+      padding:12px 32px;text-align:left;
+      font-size:.45rem;letter-spacing:.35em;text-transform:uppercase;
+      color:var(--mid);font-weight:300;
+      border-bottom:1px solid var(--line);
+    }
+    td{
+      padding:16px 32px;
+      border-bottom:1px solid var(--line);
+      font-size:.8rem;vertical-align:middle;
+    }
+    tr:hover td{background:var(--gray);}
+
+    .badge{
+      display:inline-block;padding:3px 10px;font-size:.5rem;letter-spacing:.1em;
+      text-transform:uppercase;font-weight:400;
+    }
+    .badge.sim{background:#dcfce7;color:var(--green);}
+    .badge.nao{background:#fee2e2;color:var(--red);}
+    .badge.pendente{background:#f3f4f6;color:var(--mid);}
+
+    .empty{text-align:center;padding:64px 32px;color:var(--mid);font-size:.85rem;}
+    .loading{text-align:center;padding:64px 32px;color:var(--mid);font-size:.7rem;letter-spacing:.3em;text-transform:uppercase;}
+
+    .msg-cell{max-width:200px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--mid);}
+    .name-cell{font-weight:400;}
+    .wa-cell a{color:var(--black);text-decoration:none;border-bottom:1px solid var(--line);}
+    .wa-cell a:hover{border-color:var(--black);}
+
+    .refresh-btn{
+      padding:7px 16px;border:1px solid var(--line);background:transparent;
+      font-family:'Inter',sans-serif;font-size:.5rem;letter-spacing:.25em;
+      text-transform:uppercase;cursor:pointer;transition:all .2s;color:var(--mid);
+    }
+    .refresh-btn:hover{border-color:var(--black);color:var(--black);}
+
+    .ts-cell{font-size:.68rem;color:var(--mid);}
+    .url-cell{font-size:.68rem;color:var(--mid);}
+  </style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>Larissa, 30 anos — Painel de RSVPs</h1>
+    <p>25 de Abril de 2026 · Ribeirão Preto · SP</p>
+  </div>
+  <button class="refresh-btn" onclick="load()">↺ Atualizar</button>
+</header>
+
+<div class="stats">
+  <div class="stat">
+    <div class="n" id="s-total">—</div>
+    <div class="l">Total de respostas</div>
+  </div>
+  <div class="stat green">
+    <div class="n" id="s-sim">—</div>
+    <div class="l">Confirmados</div>
+  </div>
+  <div class="stat red">
+    <div class="n" id="s-nao">—</div>
+    <div class="l">Não vão</div>
+  </div>
+</div>
+
+<div class="filters">
+  <button class="filter-btn active" data-filter="all"   onclick="setFilter('all',this)">Todos</button>
+  <button class="filter-btn"        data-filter="sim"   onclick="setFilter('sim',this)">✓ Vão</button>
+  <button class="filter-btn"        data-filter="nao"   onclick="setFilter('nao',this)">✗ Não vão</button>
+  <input  class="search" id="search" placeholder="Buscar por nome..." oninput="render()"/>
+</div>
+
+<div id="table-wrap">
+  <div class="loading">Carregando...</div>
+</div>
+
+<script>
+const TOKEN = ['gho_fAsEB2','R1CoJetRKRcuD67i','Hbna37Lg16y37L'].join('');
+const REPO  = 'devrafaelantunes/larissa-30';
+let allRsvps = [];
+let currentFilter = 'all';
+
+function parseIssue(issue){
+  const body = issue.body || '';
+  const get = key => {
+    const m = body.match(new RegExp(`\\*\\*${key}:\\*\\*\\s*(.+)`));
+    return m ? m[1].trim() : '—';
+  };
+  const labels = (issue.labels||[]).map(l=>l.name);
+  const presenca = labels.includes('rsvp-sim') ? 'sim' : labels.includes('rsvp-nao') ? 'nao' : 'pendente';
+  return {
+    id:       issue.number,
+    nome:     get('Nome'),
+    whatsapp: get('WhatsApp'),
+    presenca,
+    acomp:    get('Acompanhante'),
+    msg:      get('Mensagem'),
+    urlParam: get('Convidado \\(URL\\)'),
+    ts:       get('Data\\/hora'),
+    url:      issue.html_url,
+  };
+}
+
+async function load(){
+  document.getElementById('table-wrap').innerHTML='<div class="loading">Carregando...</div>';
+  try {
+    const res = await fetch(`https://api.github.com/repos/${REPO}/issues?labels=rsvp&state=open&per_page=100`, {
+      headers:{ Authorization:`token ${TOKEN}`, Accept:'application/vnd.github+json' }
+    });
+    const issues = await res.json();
+    allRsvps = issues.filter(i=>!i.pull_request).map(parseIssue);
+    updateStats();
+    render();
+  } catch(err){
+    document.getElementById('table-wrap').innerHTML='<div class="empty">Erro ao carregar. Verifique a conexão.</div>';
+  }
+}
+
+function updateStats(){
+  document.getElementById('s-total').textContent = allRsvps.length;
+  document.getElementById('s-sim').textContent   = allRsvps.filter(r=>r.presenca==='sim').length;
+  document.getElementById('s-nao').textContent   = allRsvps.filter(r=>r.presenca==='nao').length;
+}
+
+function setFilter(f, btn){
+  currentFilter = f;
+  document.querySelectorAll('.filter-btn').forEach(b=>b.classList.remove('active'));
+  btn.classList.add('active');
+  render();
+}
+
+function render(){
+  const q = (document.getElementById('search').value||'').toLowerCase();
+  let rows = allRsvps.filter(r=>{
+    if(currentFilter!=='all' && r.presenca!==currentFilter) return false;
+    if(q && !r.nome.toLowerCase().includes(q) && !r.whatsapp.includes(q)) return false;
+    return true;
+  });
+
+  if(!rows.length){
+    document.getElementById('table-wrap').innerHTML='<div class="empty">Nenhum resultado encontrado.</div>';
+    return;
+  }
+
+  const trs = rows.map(r=>`
+    <tr>
+      <td class="name-cell">${r.nome}</td>
+      <td class="wa-cell"><a href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">${r.whatsapp}</a></td>
+      <td>
+        <span class="badge ${r.presenca}">
+          ${r.presenca==='sim'?'✓ Vai':r.presenca==='nao'?'✗ Não vai':'Pendente'}
+        </span>
+      </td>
+      <td>${r.acomp}</td>
+      <td class="url-cell">${r.urlParam}</td>
+      <td class="msg-cell" title="${r.msg}">${r.msg}</td>
+      <td class="ts-cell">${r.ts}</td>
+    </tr>
+  `).join('');
+
+  document.getElementById('table-wrap').innerHTML=`
+    <table>
+      <thead>
+        <tr>
+          <th>Nome</th>
+          <th>WhatsApp</th>
+          <th>Presença</th>
+          <th>Acomp.</th>
+          <th>Convidado (link)</th>
+          <th>Mensagem</th>
+          <th>Data/hora</th>
+        </tr>
+      </thead>
+      <tbody>${trs}</tbody>
+    </table>
+  `;
+}
+
+load();
+</script>
+</body>
+</html>

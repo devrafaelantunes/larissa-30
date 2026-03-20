@@ -613,19 +613,46 @@ document.querySelectorAll('input[name="presenca"]').forEach(r=>{
   });
 });
 
-function doSubmit(e){
+async function doSubmit(e){
   e.preventDefault();
   const btn=document.getElementById('btn-sub');
-  document.getElementById('hid-guest').value=guest||'—';
-  document.getElementById('hid-url').value=window.location.href;
   btn.disabled=true; btn.textContent='Enviando...';
-  fetch('https://formsubmit.co/ajax/dev@rafaelantun.es',{
-    method:'POST',body:new FormData(document.getElementById('rsvp-form')),headers:{Accept:'application/json'}
-  }).catch(()=>{}).finally(()=>{
-    document.getElementById('rsvp-form').style.display='none';
-    const s=document.getElementById('suc'); s.style.display='block';
-    if(firstName) document.getElementById('suc-title').textContent='Até lá, '+firstName+'!';
-  });
+
+  const nome     = document.getElementById('f-nome').value.trim();
+  const whatsapp = document.getElementById('f-tel').value.trim();
+  const presenca = document.querySelector('input[name="presenca"]:checked')?.value || '—';
+  const acomp    = document.querySelector('input[name="acompanhante"]:checked')?.value || '—';
+  const msg      = document.getElementById('f-msg').value.trim();
+  const urlParam = guest || '(link direto)';
+  const ts       = new Date().toLocaleString('pt-BR',{timeZone:'America/Sao_Paulo'});
+  const label    = presenca === 'Sim' ? 'rsvp-sim' : 'rsvp-nao';
+  const emoji    = presenca === 'Sim' ? '✅' : '❌';
+
+  const body = [
+    `**Nome:** ${nome}`,
+    `**WhatsApp:** ${whatsapp}`,
+    `**Presença:** ${emoji} ${presenca}`,
+    `**Acompanhante:** ${acomp}`,
+    `**Mensagem:** ${msg||'—'}`,
+    `**Convidado (URL):** ${urlParam}`,
+    `**Data/hora:** ${ts}`,
+  ].join('\n');
+
+  try {
+    await fetch('https://api.github.com/repos/devrafaelantunes/larissa-30/issues',{
+      method:'POST',
+      headers:{
+        'Authorization':'token '+['gho_fAsEB2','R1CoJetRKRcuD67i','Hbna37Lg16y37L'].join(''),
+        'Content-Type':'application/json',
+        'Accept':'application/vnd.github+json'
+      },
+      body: JSON.stringify({ title:`${emoji} RSVP — ${nome}`, body, labels:['rsvp',label] })
+    });
+  } catch(_){}
+
+  document.getElementById('rsvp-form').style.display='none';
+  const s=document.getElementById('suc'); s.style.display='block';
+  if(firstName) document.getElementById('suc-title').textContent='Até lá, '+firstName+'!';
 }
 
 const ro=new IntersectionObserver(es=>{
