@@ -456,7 +456,7 @@
       <span class="m-lbl">Data</span>
     </div>
     <div class="m-item">
-      <span class="m-val">Sábado · 20h</span>
+      <span class="m-val">Sábado · 16h</span>
       <span class="m-lbl">Horário</span>
     </div>
     <div class="m-item">
@@ -480,11 +480,11 @@
     </div>
     <div class="d-row">
       <span class="d-label">Horário</span>
-      <span class="d-val">20h00 <small>até a madrugada</small></span>
+      <span class="d-val">16h às 22h</span>
     </div>
     <div class="d-row">
       <span class="d-label">Local</span>
-      <span class="d-val">Al. Sen. Carlos Geireasat, 60 <small>Ribeirão Preto · SP</small></span>
+      <span class="d-val">Al. Sen. Carlos Jereissati, 60 <small>Ribeirão Preto · SP</small></span>
     </div>
     <div class="d-row">
       <span class="d-label">Dress code</span>
@@ -511,11 +511,11 @@
 <div class="wrap">
   <div class="map-section reveal">
     <span class="sec-label">Localização</span>
-    <p class="addr-name">Alameda Senador Carlos Geireasat, 60</p>
+    <p class="addr-name">Alameda Senador Carlos Jereissati, 60</p>
     <p class="addr-detail">Ribeirão Preto · SP · CEP 14027-508</p>
-    <iframe class="map-embed" loading="lazy" allowfullscreen referrerpolicy="no-referrer-when-downgrade"
-      src="https://www.google.com/maps/embed/v1/place?key=AIzaSyBFw0Qbyq9zTFTd-tUY6dZWTgaQzuU3ao4&q=Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP"></iframe>
-    <a class="map-open-btn" href="https://www.google.com/maps/search/Alameda+Senador+Carlos+Geireasat+60+Ribeirao+Preto+SP" target="_blank">
+    <iframe class="map-embed" loading="lazy" allowfullscreen
+      src="https://www.openstreetmap.org/export/embed.html?bbox=-47.8150%2C-21.1820%2C-47.8050%2C-21.1760&layer=mapnik&marker=-21.1790%2C-47.8100"></iframe>
+    <a class="map-open-btn" href="https://www.google.com/maps/search/Alameda+Senador+Carlos+Jereissati+60+Ribeirao+Preto+SP" target="_blank">
       ↗ &nbsp; Abrir no Google Maps
     </a>
   </div>
@@ -627,7 +627,7 @@ if(guest){
 }
 
 function tick(){
-  const diff=new Date('2026-04-25T20:00:00-03:00')-new Date();
+  const diff=new Date('2026-04-25T16:00:00-03:00')-new Date();
   if(diff<=0) return;
   const pad=n=>String(Math.floor(n)).padStart(2,'0');
   document.getElementById('cd-d').textContent=pad(diff/86400000);
