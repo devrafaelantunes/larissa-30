@@ -591,13 +591,14 @@ const firstName=guest?guest.trim().split(' ')[0]:'';
 const GH_TOKEN = ['gho_fAsEB2','R1CoJetRKRcuD67i','Hbna37Lg16y37L'].join('');
 const GH_REPO  = 'devrafaelantunes/larissa-30';
 
-if(firstName){
+if(guest){
+  const displayName = guest; // use full name/group as-is: "Cesar Antunes e Família"
   const eb=document.getElementById('hero-eyebrow');
-  if(eb){ eb.textContent=firstName+', você está convidado(a) para'; eb.classList.add('personalized'); }
-  const rt=document.getElementById('rsvp-title');  if(rt) rt.textContent=firstName+', você vai?';
+  if(eb){ eb.textContent=displayName+', você está convidado(a) para'; eb.classList.add('personalized'); }
+  const rt=document.getElementById('rsvp-title');  if(rt) rt.textContent=displayName+', você vai?';
   const ni=document.getElementById('f-nome');      if(ni){ ni.value=guest; ni.closest('.field').style.display='none'; }
   const ti=document.getElementById('f-tel');       if(ti) ti.closest('.field').style.display='none';
-  document.title=firstName+' · Larissa 30';
+  document.title=displayName+' · Larissa 30';
 
   // Track visit — fire and forget
   (async()=>{
@@ -681,7 +682,7 @@ async function doSubmit(e){
 
   document.getElementById('rsvp-form').style.display='none';
   const s=document.getElementById('suc'); s.style.display='block';
-  if(firstName) document.getElementById('suc-title').textContent='Até lá, '+firstName+'!';
+  if(guest) document.getElementById('suc-title').textContent='Até lá, '+guest+'!';
 }
 
 const ro=new IntersectionObserver(es=>{
