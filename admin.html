@@ -73,6 +73,7 @@
     }
     .badge.sim{background:#dcfce7;color:var(--green);}
     .badge.nao{background:#fee2e2;color:var(--red);}
+    .badge.visitou{background:#dbeafe;color:#3b82f6;}
     .badge.pendente{background:#f3f4f6;color:var(--mid);}
 
     .empty{text-align:center;padding:64px 32px;color:var(--mid);font-size:.85rem;}
@@ -117,12 +118,17 @@
     <div class="n" id="s-nao">—</div>
     <div class="l">Não vão</div>
   </div>
+  <div class="stat" style="border-right:none">
+    <div class="n" id="s-visit" style="color:#3b82f6">—</div>
+    <div class="l">Abriram sem confirmar</div>
+  </div>
 </div>
 
 <div class="filters">
-  <button class="filter-btn active" data-filter="all"   onclick="setFilter('all',this)">Todos</button>
-  <button class="filter-btn"        data-filter="sim"   onclick="setFilter('sim',this)">✓ Vão</button>
-  <button class="filter-btn"        data-filter="nao"   onclick="setFilter('nao',this)">✗ Não vão</button>
+  <button class="filter-btn active" data-filter="all"     onclick="setFilter('all',this)">Todos</button>
+  <button class="filter-btn"        data-filter="sim"     onclick="setFilter('sim',this)">✓ Vão</button>
+  <button class="filter-btn"        data-filter="nao"     onclick="setFilter('nao',this)">✗ Não vão</button>
+  <button class="filter-btn"        data-filter="visitou" onclick="setFilter('visitou',this)">👁 Só visitaram</button>
   <input  class="search" id="search" placeholder="Buscar por nome..." oninput="render()"/>
 </div>
 
@@ -160,11 +166,27 @@ function parseIssue(issue){
 async function load(){
   document.getElementById('table-wrap').innerHTML='<div class="loading">Carregando...</div>';
   try {
+    // Load RSVPs
     const res = await fetch(`https://api.github.com/repos/${REPO}/issues?labels=rsvp&state=open&per_page=100`, {
       headers:{ Authorization:`token ${TOKEN}`, Accept:'application/vnd.github+json' }
     });
     const issues = await res.json();
-    allRsvps = issues.filter(i=>!i.pull_request).map(parseIssue);
+    const rsvps = issues.filter(i=>!i.pull_request).map(parseIssue);
+
+    // Load visits (no rsvp confirmed yet)
+    const res2 = await fetch(`https://api.github.com/repos/${REPO}/issues?labels=visitou&state=open&per_page=100`, {
+      headers:{ Authorization:`token ${TOKEN}`, Accept:'application/vnd.github+json' }
+    });
+    const visits = await res2.json();
+    const rsvpNames = new Set(rsvps.map(r=>r.nome.toLowerCase()));
+    const visitOnly = visits.filter(i=>!i.pull_request).map(i=>{
+      const m = i.body?.match(/\*\*Convidado:\*\* (.+)/);
+      const tm = i.body?.match(/\*\*Visitou em:\*\* (.+)/);
+      const nome = m?m[1].trim():'—';
+      return { id:i.number, nome, whatsapp:'—', presenca:'visitou', acomp:'—', msg:'—', urlParam:nome, ts:tm?tm[1].trim():'—' };
+    }).filter(v=>!rsvpNames.has(v.nome.toLowerCase()));
+
+    allRsvps = [...rsvps, ...visitOnly];
     updateStats();
     render();
   } catch(err){
@@ -173,9 +195,11 @@ async function load(){
 }
 
 function updateStats(){
-  document.getElementById('s-total').textContent = allRsvps.length;
+  const rsvps = allRsvps.filter(r=>r.presenca!=='visitou');
+  document.getElementById('s-total').textContent = rsvps.length;
   document.getElementById('s-sim').textContent   = allRsvps.filter(r=>r.presenca==='sim').length;
   document.getElementById('s-nao').textContent   = allRsvps.filter(r=>r.presenca==='nao').length;
+  document.getElementById('s-visit').textContent = allRsvps.filter(r=>r.presenca==='visitou').length;
 }
 
 function setFilter(f, btn){
@@ -204,7 +228,7 @@ function render(){
       <td class="wa-cell"><a href="https://wa.me/55${r.whatsapp.replace(/\D/g,'')}" target="_blank">${r.whatsapp}</a></td>
       <td>
         <span class="badge ${r.presenca}">
-          ${r.presenca==='sim'?'✓ Vai':r.presenca==='nao'?'✗ Não vai':'Pendente'}
+          ${r.presenca==='sim'?'✓ Vai':r.presenca==='nao'?'✗ Não vai':r.presenca==='visitou'?'👁 Visitou':'Pendente'}
         </span>
       </td>
       <td>${r.acomp}</td>
