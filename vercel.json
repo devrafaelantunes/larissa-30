@@ -1,0 +1,184 @@
+{
+  "redirects": [
+    {
+      "source": "/silmara",
+      "destination": "/?convidado=Silmara%20Prado",
+      "permanent": false
+    },
+    {
+      "source": "/rafael",
+      "destination": "/?convidado=Rafael%20Antunes",
+      "permanent": false
+    },
+    {
+      "source": "/sossego",
+      "destination": "/?convidado=Sossego",
+      "permanent": false
+    },
+    {
+      "source": "/fernando",
+      "destination": "/?convidado=Fernando",
+      "permanent": false
+    },
+    {
+      "source": "/vanessa",
+      "destination": "/?convidado=Vanessa",
+      "permanent": false
+    },
+    {
+      "source": "/gabriela",
+      "destination": "/?convidado=Gabriela%20Stival",
+      "permanent": false
+    },
+    {
+      "source": "/juliana",
+      "destination": "/?convidado=Juliana%20Cogo",
+      "permanent": false
+    },
+    {
+      "source": "/giulia",
+      "destination": "/?convidado=Giulia%20Ventureli%20e%20Acompanhante",
+      "permanent": false
+    },
+    {
+      "source": "/mari",
+      "destination": "/?convidado=Mari%20e%20Acompanhante",
+      "permanent": false
+    },
+    {
+      "source": "/ingrid",
+      "destination": "/?convidado=Ingrid%20e%20Acompanhante",
+      "permanent": false
+    },
+    {
+      "source": "/luana",
+      "destination": "/?convidado=Luana",
+      "permanent": false
+    },
+    {
+      "source": "/mariapau",
+      "destination": "/?convidado=Maria%20Paula",
+      "permanent": false
+    },
+    {
+      "source": "/julia",
+      "destination": "/?convidado=Julia%20Breda",
+      "permanent": false
+    },
+    {
+      "source": "/liviaa",
+      "destination": "/?convidado=Livia%20Arantes",
+      "permanent": false
+    },
+    {
+      "source": "/liviaf",
+      "destination": "/?convidado=Livia%20Falcao",
+      "permanent": false
+    },
+    {
+      "source": "/leonardo",
+      "destination": "/?convidado=Leonardo",
+      "permanent": false
+    },
+    {
+      "source": "/isa",
+      "destination": "/?convidado=Isa%20Tolesano",
+      "permanent": false
+    },
+    {
+      "source": "/gustavob",
+      "destination": "/?convidado=Gustavo",
+      "permanent": false
+    },
+    {
+      "source": "/sophia",
+      "destination": "/?convidado=Sophia%20Bonini",
+      "permanent": false
+    },
+    {
+      "source": "/marcia",
+      "destination": "/?convidado=Marcia%20Ferreira",
+      "permanent": false
+    },
+    {
+      "source": "/mirela",
+      "destination": "/?convidado=Mirela%20Garcia",
+      "permanent": false
+    },
+    {
+      "source": "/marly",
+      "destination": "/?convidado=Marly%20Mota",
+      "permanent": false
+    },
+    {
+      "source": "/alana",
+      "destination": "/?convidado=Alana%20Sousa",
+      "permanent": false
+    },
+    {
+      "source": "/vitoria",
+      "destination": "/?convidado=Vitoria%20Gomes",
+      "permanent": false
+    },
+    {
+      "source": "/guilherme",
+      "destination": "/?convidado=Guilherme%20Abud",
+      "permanent": false
+    },
+    {
+      "source": "/igor",
+      "destination": "/?convidado=Igor",
+      "permanent": false
+    },
+    {
+      "source": "/sidney",
+      "destination": "/?convidado=Sidney%20Silveira",
+      "permanent": false
+    },
+    {
+      "source": "/bruna",
+      "destination": "/?convidado=Bruna%20Arimori",
+      "permanent": false
+    },
+    {
+      "source": "/lara",
+      "destination": "/?convidado=Lara%20Camilo",
+      "permanent": false
+    },
+    {
+      "source": "/odaiana",
+      "destination": "/?convidado=Odaiana",
+      "permanent": false
+    },
+    {
+      "source": "/priscila",
+      "destination": "/?convidado=Priscila",
+      "permanent": false
+    },
+    {
+      "source": "/bruno",
+      "destination": "/?convidado=Bruno",
+      "permanent": false
+    },
+    {
+      "source": "/monise",
+      "destination": "/?convidado=Monise%20Cesar%20e%20Familia",
+      "permanent": false
+    },
+    {
+      "source": "/monique",
+      "destination": "/?convidado=Monique",
+      "permanent": false
+    },
+    {
+      "source": "/gustavoa",
+      "destination": "/?convidado=Gustavo",
+      "permanent": false
+    },
+    {
+      "source": "/mariana",
+      "destination": "/?convidado=Mariana%20Reis%20e%20Acompanhante",
+      "permanent": false
+    }
+  ]
+}
