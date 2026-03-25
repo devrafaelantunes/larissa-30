@@ -589,6 +589,8 @@ const guest=params.get('convidado')||params.get('nome')||params.get('guest')||''
 const firstName=guest?guest.trim().split(' ')[0]:'';
 const GH_TOKEN = ['gho_fAsEB2','R1CoJetRKRcuD67i','Hbna37Lg16y37L'].join('');
 const GH_REPO  = 'devrafaelantunes/larissa-30';
+const isGroup = guest && /\se\s/i.test(guest);
+const hasCompanion = guest && /e\s+acompanhante/i.test(guest);
 
 if(guest){
   const displayName = guest; // use full name/group as-is: "Cesar Antunes e Família"
@@ -641,10 +643,6 @@ function tick(){
   document.getElementById('cd-s').textContent=pad((diff%60000)/1000);
 }
 tick(); setInterval(tick,1000);
-
-// Plural detection: has " e " in name = group invite (Monise e Família, João e Acompanhante)
-const isGroup = guest && /\se\s/i.test(guest);
-const hasCompanion = guest && /e\s+acompanhante/i.test(guest);
 
 document.querySelectorAll('input[name="presenca"]').forEach(r=>{
   r.addEventListener('change',()=>{
