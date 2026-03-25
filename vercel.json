@@ -179,6 +179,16 @@
       "source": "/mariana",
       "destination": "/?convidado=Mariana%20Reis%20e%20Acompanhante",
       "permanent": false
+    },
+    {
+      "source": "/pamela",
+      "destination": "/?convidado=Pamela",
+      "permanent": false
+    },
+    {
+      "source": "/mariaantonia",
+      "destination": "/?convidado=Maria%20Antonia",
+      "permanent": false
     }
   ]
 }
