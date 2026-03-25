@@ -93,6 +93,8 @@
 
     .ts-cell{font-size:.68rem;color:var(--mid);}
     .url-cell{font-size:.68rem;color:var(--mid);}
+    .del-btn{background:none;border:none;cursor:pointer;font-size:1rem;opacity:.4;transition:opacity .2s;padding:2px 6px;}
+    .del-btn:hover{opacity:1;}
   </style>
 </head>
 <body>
@@ -235,6 +237,7 @@ function render(){
       <td class="url-cell">${r.urlParam}</td>
       <td class="msg-cell" title="${r.msg}">${r.msg}</td>
       <td class="ts-cell">${r.ts}</td>
+      <td><button class="del-btn" onclick="deleteEntry(${r.id})" title="Deletar">🗑</button></td>
     </tr>
   `).join('');
 
@@ -249,11 +252,24 @@ function render(){
           <th>Convidado (link)</th>
           <th>Mensagem</th>
           <th>Data/hora</th>
+          <th></th>
         </tr>
       </thead>
       <tbody>${trs}</tbody>
     </table>
   `;
+}
+
+async function deleteEntry(issueNumber) {
+  if(!confirm('Deletar essa entrada?')) return;
+  await fetch(`https://api.github.com/repos/${REPO}/issues/${issueNumber}`, {
+    method: 'PATCH',
+    headers: { Authorization:`token ${TOKEN}`, Accept:'application/vnd.github+json', 'Content-Type':'application/json' },
+    body: JSON.stringify({ state: 'closed' })
+  });
+  allRsvps = allRsvps.filter(r => r.id !== issueNumber);
+  updateStats();
+  render();
 }
 
 load();
