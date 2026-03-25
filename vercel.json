@@ -152,7 +152,7 @@
     },
     {
       "source": "/priscila",
-      "destination": "/?convidado=Priscila%20Sala%20e%20Acompanhante",
+      "destination": "/?convidado=Priscila%20e%20Acompanhante",
       "permanent": false
     },
     {
