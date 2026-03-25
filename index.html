@@ -636,11 +636,12 @@ function tick(){
 }
 tick(); setInterval(tick,1000);
 
+// Show companion field only if the invite name includes "e Acompanhante" (or similar)
+const hasCompanion = guest && /e\s+acompanhante/i.test(guest);
+
 document.querySelectorAll('input[name="presenca"]').forEach(r=>{
   r.addEventListener('change',()=>{
-    // Only show companion field if it's a personalized link (named invite)
-    const isPersonalized = !!guest;
-    document.getElementById('acomp-field').classList.toggle('open', r.value==='Sim' && isPersonalized);
+    document.getElementById('acomp-field').classList.toggle('open', r.value==='Sim' && hasCompanion);
   });
 });
 
